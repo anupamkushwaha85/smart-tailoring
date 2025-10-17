@@ -976,6 +976,23 @@ body {
     color: var(--text-dark);
 }
 
+/* Shop Name Overlay on Card Image */
+
+
+.shop-name-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    padding: 15px 10px 10px 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+
 .verified-badge {
     background: var(--primary-color);
     color: var(--white);
@@ -1161,4 +1178,257 @@ body {
     .tailor-action-btn {
         width: 100%;
     }
+}
+
+/* ============================================
+   VERIFIED BADGE - NEW ADDITION
+   ============================================ */
+.verified-badge-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.verified-badge-inline i {
+    font-size: 0.8rem;
+}
+
+
+/* Make header clickable with hover effect */
+.clickable-header {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.clickable-header:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+/* ================================================
+   HYBRID COMPACT LAYOUT - EXACT AS REQUESTED
+   ================================================ */
+
+.tailor-card-compact {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+
+.tailor-card-compact:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+/* TOP SECTION: Image + Title/Rating */
+.tailor-header-section {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.tailor-image-left {
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.tailor-image-left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tailor-avatar-left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.tailor-title-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.title-verified-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.shop-name-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.verified-badge-small {
+    background: #667eea;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.owner-subtitle {
+    font-size: 0.85rem;
+    color: #718096;
+    margin: 0;
+}
+
+.rating-exp-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.rating-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.stars {
+    color: #ffc107;
+    font-size: 0.9rem;
+}
+
+.rating-num {
+    font-weight: 700;
+    color: #2d3748;
+    font-size: 0.9rem;
+}
+
+.review-count {
+    color: #718096;
+    font-size: 0.8rem;
+}
+
+.exp-badge {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* MIDDLE SECTION: Details */
+.tailor-details-full {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.detail-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #4a5568;
+}
+
+.detail-line i {
+    color: #667eea;
+    width: 14px;
+    font-size: 0.85rem;
+}
+
+.services-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.services-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.service-badge {
+    background: #edf2f7;
+    color: #4a5568;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* BOTTOM SECTION: Action Buttons */
+.tailor-actions-footer {
+    display: flex;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.action-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-call-action {
+    background: #48bb78;
+    color: white;
+}
+
+.btn-location-action {
+    background: #4299e1;
+    color: white;
+}
+
+.btn-order-action {
+    background: #667eea;
+    color: white;
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
 }

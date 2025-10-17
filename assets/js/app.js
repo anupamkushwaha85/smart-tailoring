@@ -157,96 +157,82 @@ function displayTailors(tailors) {
     });
 }
 
-// Create individual tailor card
+// Create individual tailor card - HYBRID LAYOUT WITH CARD CLICK
 function createTailorCard(tailor) {
     const card = document.createElement('div');
-    card.className = 'tailor-card';
+    card.className = 'tailor-card-compact';
     card.dataset.area = tailor.area;
     card.dataset.verified = tailor.is_verified;
     card.dataset.priceRange = tailor.price_range;
 
     // Prepare services array
     const services = tailor.services_offered ? tailor.services_offered.split(',').slice(0, 3) : [];
+
+    // Make entire card clickable
     card.style.cursor = 'pointer';
     card.onclick = () => {
         window.location.href = `/smart/smart-tailoring/view_tailor.php?id=${tailor.id}`;
     };
 
     card.innerHTML = `
-        <div class="tailor-card-header">
-            ${tailor.shop_image
-            ? `<img src="/smart/smart-tailoring/uploads/shops/${tailor.shop_image}" 
-                   alt="${tailor.shop_name}"
-                   class="tailor-card-avatar"
-                   style="width: 100%; height: 100%; object-fit: cover;">`
-            : `<div class="tailor-card-avatar" style="display: flex; align-items: center;  justify-content: center; 
-                   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                   color: white; font-size: 2.5rem; font-weight: 700;">
-                   ${tailor.shop_name.charAt(0).toUpperCase()}
-               </div>`
-        }
+        <!-- TOP SECTION: Image (left) + Title/Rating (right) -->
+        <div class="tailor-header-section">
+            <div class="tailor-image-left">
+                ${tailor.shop_image
+                ? `<img src="/smart/smart-tailoring/uploads/shops/${tailor.shop_image}" alt="${tailor.shop_name}">`
+                : `<div class="tailor-avatar-left">${tailor.shop_name.charAt(0).toUpperCase()}</div>`
+            }
+            </div>
             
-            <div class="tailor-card-info">
-                <div class="tailor-card-title">
-                    <h3 class="tailor-name">${tailor.shop_name}</h3>
-                    ${tailor.is_verified ? '<span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>' : ''}
+            <div class="tailor-title-right">
+                <div class="title-verified-row">
+                    <h3 class="shop-name-title">${tailor.shop_name}</h3>
+                    ${tailor.is_verified == 1 ? '<span class="verified-badge-small"><i class="fas fa-check-circle"></i> Verified</span>' : ''}
                 </div>
-                
-                <p class="tailor-owner">by ${tailor.owner_name}</p>
-                
-                <div class="tailor-rating">
-                    <span class="rating-stars">${generateStars(tailor.rating)}</span>
-                    <span class="rating-value">${tailor.rating.toFixed(1)}</span>
-                    <span class="rating-count">(${tailor.total_reviews} reviews)</span>
-                    <span class="experience-badge">${tailor.experience_years}+ years</span>
+                <p class="owner-subtitle">by ${tailor.owner_name}</p>
+                <div class="rating-exp-row">
+                    <div class="rating-group">
+                        <span class="stars">${generateStars(tailor.rating || 0)}</span>
+                        <span class="rating-num">${tailor.rating ? Number(tailor.rating).toFixed(1) : '0.0'}</span>
+                        <span class="review-count">(${tailor.total_reviews || 0} reviews)</span>
+                    </div>
+                    <span class="exp-badge">${tailor.experience_years}+ years</span>
                 </div>
             </div>
         </div>
         
-        <div class="tailor-card-body">
-            <div class="tailor-detail-item">
+        <!-- MIDDLE SECTION: Details (full width from left) -->
+        <div class="tailor-details-full">
+            <div class="detail-line">
                 <i class="fas fa-map-marker-alt"></i>
                 <span>${tailor.shop_address}</span>
             </div>
-            
-            <div class="tailor-detail-item">
+            <div class="detail-line">
                 <i class="fas fa-phone"></i>
                 <span>+91 ${maskPhone(tailor.phone)}</span>
             </div>
-            
-            <div class="tailor-detail-item">
+            <div class="detail-line">
                 <i class="fas fa-rupee-sign"></i>
-                <span class="price-range-display">${formatPriceRange(tailor.price_range)}</span>
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
-                <div style="color: #ffd700; font-size: 1.2rem;">
-                    ${generateStars(tailor.rating || 0)}
-                </div>
-                <span style="color: #666; font-size: 0.9rem;">
-                    ${tailor.rating ? Number(tailor.rating).toFixed(1) : '0.0'} 
-                    (${tailor.total_reviews || 0} reviews)
-                </span>
+                <span>${formatPriceRange(tailor.price_range)}</span>
             </div>
             
-            <div class="tailor-services-section">
+            <div class="services-row">
                 <span class="services-label">Services:</span>
-                <div class="tailor-services">
-                    ${services.map(service =>
-            `<span class="service-tag">${service.trim()}</span>`
-        ).join('')}
-                </div>
+                ${services.map(service =>
+                    `<span class="service-badge">${service.trim()}</span>`
+                ).join('')}
             </div>
         </div>
         
-        <div class="tailor-card-footer">
-            <button class="tailor-action-btn btn-call" onclick="callTailor('${tailor.phone}')">
+        <!-- BOTTOM SECTION: Buttons (equally distributed) -->
+        <div class="tailor-actions-footer" onclick="event.stopPropagation()">
+            <button class="action-btn btn-call-action" onclick="callTailor('${tailor.phone}')">
                 <i class="fas fa-phone"></i>
             </button>
-            <button class="tailor-action-btn btn-location" onclick="showLocation(${tailor.id})">
+            <button class="action-btn btn-location-action" onclick="showLocation(${tailor.id})">
                 <i class="fas fa-map-marker-alt"></i>
             </button>
-            <button class="tailor-action-btn btn-order" onclick="placeOrder(${tailor.id})">
+            <button class="action-btn btn-order-action" onclick="placeOrder(${tailor.id})">
                 <i class="fas fa-shopping-cart"></i>
             </button>
         </div>
@@ -254,6 +240,9 @@ function createTailorCard(tailor) {
 
     return card;
 }
+
+
+
 
 // Mask phone number for privacy
 function maskPhone(phone) {
@@ -767,7 +756,7 @@ function generateStars(rating) {
     let stars = '';
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
-    
+
     for (let i = 1; i <= 5; i++) {
         if (i <= fullStars) {
             stars += '<i class="fas fa-star"></i>';
@@ -777,7 +766,7 @@ function generateStars(rating) {
             stars += '<i class="far fa-star"></i>';
         }
     }
-    
+
     return stars;
 }
 
