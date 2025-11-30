@@ -415,6 +415,17 @@ $customer_name = $_SESSION['user_name'];
                 padding: 0.75rem;
                 font-size: 0.9rem;
             }
+
+            /* Responsive measurement form grid - 2 columns on tablet */
+            .measurements-grid-form {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.875rem;
+            }
+
+            .modal-content {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -445,6 +456,39 @@ $customer_name = $_SESSION['user_name'];
             .btn-action {
                 padding: 0.65rem;
                 font-size: 0.85rem;
+            }
+
+            /* Single column for mobile */
+            .measurements-grid-form {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .modal-content {
+                margin: 0.5rem;
+                padding: 1rem;
+            }
+
+            .modal-header h2 {
+                font-size: 1.25rem;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 0.65rem;
+                font-size: 0.95rem;
+                min-height: 44px;
+                /* Touch-friendly */
+            }
+
+            .btn-save {
+                padding: 0.85rem;
+                font-size: 1rem;
             }
         }
     </style>
@@ -523,9 +567,30 @@ $customer_name = $_SESSION['user_name'];
                 <div class="form-group">
                     <label for="garment_context">Garment Type *</label>
                     <select id="garment_context" name="garment_context" required onchange="updateMeasurementFields()">
-                        <option value="shirt">Shirt</option>
-                        <option value="pants">Pants</option>
-                        <option value="full">Full Body (Complete)</option>
+                        <option value="">Select garment type</option>
+                        <optgroup label="Men's Wear">
+                            <option value="Shirt">Shirt</option>
+                            <option value="Pants">Pants/Trousers</option>
+                            <option value="Suit">Suit</option>
+                            <option value="Kurta">Kurta</option>
+                            <option value="Sherwani">Sherwani</option>
+                            <option value="Blazer">Blazer</option>
+                            <option value="Waistcoat">Waistcoat</option>
+                        </optgroup>
+                        <optgroup label="Women's Wear">
+                            <option value="Blouse">Blouse</option>
+                            <option value="Saree">Saree</option>
+                            <option value="Salwar Kameez">Salwar Kameez</option>
+                            <option value="Lehenga">Lehenga</option>
+                            <option value="Dress">Dress</option>
+                            <option value="Gown">Gown</option>
+                            <option value="Kurti">Kurti</option>
+                        </optgroup>
+                        <optgroup label="Kids Wear">
+                            <option value="Kids Shirt">Kids Shirt</option>
+                            <option value="Kids Dress">Kids Dress</option>
+                            <option value="Kids Frock">Kids Frock</option>
+                        </optgroup>
                     </select>
                 </div>
 
@@ -554,9 +619,9 @@ $customer_name = $_SESSION['user_name'];
     </div>
 
     <script>
-        // Measurement fields templates
+        // Measurement fields templates for all garment types
         const measurementFields = {
-            shirt: [{
+            'Shirt': [{
                     name: 'chest',
                     label: 'Chest'
                 },
@@ -577,6 +642,10 @@ $customer_name = $_SESSION['user_name'];
                     label: 'Shirt Length'
                 },
                 {
+                    name: 'collar',
+                    label: 'Collar Size'
+                },
+                {
                     name: 'neck',
                     label: 'Neck'
                 },
@@ -587,23 +656,19 @@ $customer_name = $_SESSION['user_name'];
                 {
                     name: 'wrist',
                     label: 'Wrist'
-                },
-                {
-                    name: 'collar',
-                    label: 'Collar'
                 }
             ],
-            pants: [{
+            'Pants': [{
                     name: 'waist',
                     label: 'Waist'
                 },
                 {
-                    name: 'hips',
-                    label: 'Hips'
+                    name: 'hip',
+                    label: 'Hip'
                 },
                 {
                     name: 'inseam',
-                    label: 'Inseam'
+                    label: 'Inseam/Length'
                 },
                 {
                     name: 'outseam',
@@ -619,14 +684,14 @@ $customer_name = $_SESSION['user_name'];
                 },
                 {
                     name: 'ankle',
-                    label: 'Ankle'
+                    label: 'Bottom/Ankle'
                 },
                 {
                     name: 'rise',
-                    label: 'Rise'
+                    label: 'Rise (Front)'
                 }
             ],
-            full: [{
+            'Suit': [{
                     name: 'chest',
                     label: 'Chest'
                 },
@@ -635,8 +700,308 @@ $customer_name = $_SESSION['user_name'];
                     label: 'Waist'
                 },
                 {
-                    name: 'hips',
-                    label: 'Hips'
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
+                },
+                {
+                    name: 'sleeve_length',
+                    label: 'Sleeve Length'
+                },
+                {
+                    name: 'jacket_length',
+                    label: 'Jacket Length'
+                },
+                {
+                    name: 'pant_waist',
+                    label: 'Pant Waist'
+                },
+                {
+                    name: 'inseam',
+                    label: 'Pant Inseam'
+                },
+                {
+                    name: 'neck',
+                    label: 'Neck'
+                }
+            ],
+            'Kurta': [{
+                    name: 'chest',
+                    label: 'Chest'
+                },
+                {
+                    name: 'waist',
+                    label: 'Waist'
+                },
+                {
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
+                },
+                {
+                    name: 'sleeve_length',
+                    label: 'Sleeve Length'
+                },
+                {
+                    name: 'kurta_length',
+                    label: 'Kurta Length'
+                },
+                {
+                    name: 'neck',
+                    label: 'Neck'
+                }
+            ],
+            'Sherwani': [{
+                    name: 'chest',
+                    label: 'Chest'
+                },
+                {
+                    name: 'waist',
+                    label: 'Waist'
+                },
+                {
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
+                },
+                {
+                    name: 'sleeve_length',
+                    label: 'Sleeve Length'
+                },
+                {
+                    name: 'sherwani_length',
+                    label: 'Sherwani Length'
+                },
+                {
+                    name: 'neck',
+                    label: 'Neck'
+                }
+            ],
+            'Blazer': [{
+                    name: 'chest',
+                    label: 'Chest'
+                },
+                {
+                    name: 'waist',
+                    label: 'Waist'
+                },
+                {
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
+                },
+                {
+                    name: 'sleeve_length',
+                    label: 'Sleeve Length'
+                },
+                {
+                    name: 'blazer_length',
+                    label: 'Blazer Length'
+                }
+            ],
+            'Waistcoat': [{
+                    name: 'chest',
+                    label: 'Chest'
+                },
+                {
+                    name: 'waist',
+                    label: 'Waist'
+                },
+                {
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
+                },
+                {
+                    name: 'waistcoat_length',
+                    label: 'Waistcoat Length'
+                }
+            ],
+            'Blouse': [{
+                    name: 'bust',
+                    label: 'Bust'
+                },
+                {
+                    name: 'waist',
+                    label: 'Waist'
+                },
+                {
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
+                },
+                {
+                    name: 'sleeve_length',
+                    label: 'Sleeve Length'
+                },
+                {
+                    name: 'blouse_length',
+                    label: 'Blouse Length'
+                },
+                {
+                    name: 'armhole',
+                    label: 'Armhole'
+                }
+            ],
+            'Saree': [{
+                    name: 'blouse_bust',
+                    label: 'Blouse Bust'
+                },
+                {
+                    name: 'blouse_waist',
+                    label: 'Blouse Waist'
+                },
+                {
+                    name: 'blouse_shoulder',
+                    label: 'Shoulder Width'
+                },
+                {
+                    name: 'blouse_length',
+                    label: 'Blouse Length'
+                },
+                {
+                    name: 'sleeve_length',
+                    label: 'Sleeve Length'
+                },
+                {
+                    name: 'petticoat_waist',
+                    label: 'Petticoat Waist'
+                },
+                {
+                    name: 'petticoat_length',
+                    label: 'Petticoat Length'
+                }
+            ],
+            'Salwar Kameez': [{
+                    name: 'bust',
+                    label: 'Bust'
+                },
+                {
+                    name: 'waist',
+                    label: 'Waist'
+                },
+                {
+                    name: 'hip',
+                    label: 'Hip'
+                },
+                {
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
+                },
+                {
+                    name: 'sleeve_length',
+                    label: 'Sleeve Length'
+                },
+                {
+                    name: 'kameez_length',
+                    label: 'Kameez Length'
+                },
+                {
+                    name: 'salwar_length',
+                    label: 'Salwar Length'
+                }
+            ],
+            'Lehenga': [{
+                    name: 'bust',
+                    label: 'Bust'
+                },
+                {
+                    name: 'waist',
+                    label: 'Waist'
+                },
+                {
+                    name: 'hip',
+                    label: 'Hip'
+                },
+                {
+                    name: 'choli_length',
+                    label: 'Choli Length'
+                },
+                {
+                    name: 'lehenga_length',
+                    label: 'Lehenga Length'
+                },
+                {
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
+                }
+            ],
+            'Dress': [{
+                    name: 'bust',
+                    label: 'Bust'
+                },
+                {
+                    name: 'waist',
+                    label: 'Waist'
+                },
+                {
+                    name: 'hip',
+                    label: 'Hip'
+                },
+                {
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
+                },
+                {
+                    name: 'sleeve_length',
+                    label: 'Sleeve Length'
+                },
+                {
+                    name: 'dress_length',
+                    label: 'Dress Length'
+                }
+            ],
+            'Gown': [{
+                    name: 'bust',
+                    label: 'Bust'
+                },
+                {
+                    name: 'waist',
+                    label: 'Waist'
+                },
+                {
+                    name: 'hip',
+                    label: 'Hip'
+                },
+                {
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
+                },
+                {
+                    name: 'sleeve_length',
+                    label: 'Sleeve Length'
+                },
+                {
+                    name: 'gown_length',
+                    label: 'Gown Length'
+                }
+            ],
+            'Kurti': [{
+                    name: 'bust',
+                    label: 'Bust'
+                },
+                {
+                    name: 'waist',
+                    label: 'Waist'
+                },
+                {
+                    name: 'hip',
+                    label: 'Hip'
+                },
+                {
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
+                },
+                {
+                    name: 'sleeve_length',
+                    label: 'Sleeve Length'
+                },
+                {
+                    name: 'kurti_length',
+                    label: 'Kurti Length'
+                }
+            ],
+            'Kids Shirt': [{
+                    name: 'chest',
+                    label: 'Chest'
+                },
+                {
+                    name: 'waist',
+                    label: 'Waist'
                 },
                 {
                     name: 'shoulder_width',
@@ -649,26 +1014,40 @@ $customer_name = $_SESSION['user_name'];
                 {
                     name: 'shirt_length',
                     label: 'Shirt Length'
+                }
+            ],
+            'Kids Dress': [{
+                    name: 'chest',
+                    label: 'Chest'
                 },
                 {
-                    name: 'neck',
-                    label: 'Neck'
+                    name: 'waist',
+                    label: 'Waist'
                 },
                 {
-                    name: 'inseam',
-                    label: 'Inseam'
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
                 },
                 {
-                    name: 'outseam',
-                    label: 'Outseam'
+                    name: 'dress_length',
+                    label: 'Dress Length'
+                }
+            ],
+            'Kids Frock': [{
+                    name: 'chest',
+                    label: 'Chest'
                 },
                 {
-                    name: 'thigh',
-                    label: 'Thigh'
+                    name: 'waist',
+                    label: 'Waist'
                 },
                 {
-                    name: 'ankle',
-                    label: 'Ankle'
+                    name: 'shoulder_width',
+                    label: 'Shoulder Width'
+                },
+                {
+                    name: 'frock_length',
+                    label: 'Frock Length'
                 }
             ]
         };
@@ -714,7 +1093,7 @@ $customer_name = $_SESSION['user_name'];
         // Create measurement card HTML
         function createMeasurementCard(measurement) {
             const isDefault = measurement.is_default == 1;
-            const context = measurement.garment_context.charAt(0).toUpperCase() + measurement.garment_context.slice(1);
+            const context = measurement.garment_context; // Already has proper casing from database
 
             let measurementsHTML = '';
             if (measurement.measurements) {
@@ -764,10 +1143,20 @@ $customer_name = $_SESSION['user_name'];
             const fields = measurementFields[garmentType];
             const container = document.getElementById('measurementFields');
 
+            if (!garmentType) {
+                container.innerHTML = '<p style="color: var(--text-light); font-style: italic; grid-column: 1 / -1;"><i class="fas fa-arrow-up"></i> Please select a garment type first</p>';
+                return;
+            }
+
+            if (!fields) {
+                container.innerHTML = '<p style="color: var(--text-light); font-style: italic; grid-column: 1 / -1;"><i class="fas fa-info-circle"></i> No specific fields configured for this garment type</p>';
+                return;
+            }
+
             container.innerHTML = fields.map(field => `
                 <div class="form-group">
-                    <label for="${field.name}">${field.label}</label>
-                    <input type="number" step="0.1" id="${field.name}" name="${field.name}" placeholder="0.0">
+                    <label for="${field.name}">${field.label} <span style="color: var(--text-light); font-size: 0.875rem;">(inches)</span></label>
+                    <input type="number" step="0.1" id="${field.name}" name="${field.name}" placeholder="0.0" min="0">
                 </div>
             `).join('');
         }

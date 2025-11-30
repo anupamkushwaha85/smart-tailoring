@@ -218,7 +218,7 @@ function displayOrderDetails(order, history) {
                         ${createDetailRow('Estimated Price', '₹' + (order.estimated_price || 'TBD'))}
                         ${order.final_price ? createDetailRow('Final Price', '₹' + order.final_price) : ''}
                         ${order.fabric_type ? createDetailRow('Fabric Type', order.fabric_type) : ''}
-                        ${order.fabric_color ? createDetailRow('Fabric Color', order.fabric_color) : ''}
+                        ${order.fabric_color ? createDetailRow('Fabric Color', `${order.fabric_color} <span style="display: inline-block; width: 20px; height: 20px; background-color: ${order.fabric_color}; border: 1px solid #ccc; border-radius: 3px; margin-left: 8px; vertical-align: middle;"></span>`) : ''}
                         ${order.deadline ? createDetailRow('Deadline', formatDate(order.deadline)) : ''}
                         ${order.deposit_amount ? createDetailRow('Deposit', '₹' + order.deposit_amount) : ''}
                         ${order.balance_due ? createDetailRow('Balance Due', '₹' + order.balance_due) : ''}

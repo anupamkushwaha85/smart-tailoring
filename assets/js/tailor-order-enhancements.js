@@ -266,7 +266,7 @@ function displayTailorOrderDetails(order, history) {
                         ${createDetailRow('Quantity', order.quantity)}
                         ${createDetailRow('Estimated Price', '₹' + (order.estimated_price || 'TBD'))}
                         ${order.fabric_type ? createDetailRow('Fabric', order.fabric_type) : ''}
-                        ${order.fabric_color ? createDetailRow('Color', order.fabric_color) : ''}
+                        ${order.fabric_color ? createDetailRow('Color', `${order.fabric_color} <span style="display: inline-block; width: 20px; height: 20px; background-color: ${order.fabric_color}; border: 1px solid #ccc; border-radius: 3px; margin-left: 8px; vertical-align: middle;"></span>`) : ''}
                     </div>
                 </div>
             </div>

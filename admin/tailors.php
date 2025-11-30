@@ -11,6 +11,7 @@ require_once 'includes/admin_security.php';
 // Database connection
 define('DB_ACCESS', true);
 require_once '../config/db.php';
+require_once '../services/NotificationService.php';
 
 // Handle actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
@@ -18,6 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
 
     try {
+        $notificationService = new NotificationService($conn);
+
         if ($action === 'verify') {
             // Verify tailor
             $stmt = $conn->prepare("UPDATE tailors SET is_verified = 1, verified_by_admin_id = ?, verified_at = NOW() WHERE id = ?");
@@ -26,6 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
             logActivity('verify_tailor', "Verified tailor ID: $tailor_id", 'tailor', $tailor_id);
             $success_message = "Tailor verified successfully!";
+
+            // Send verification notification to tailor
+            $notificationService->notifyVerification($tailor_id, true);
         } elseif ($action === 'unverify') {
             // Unverify tailor
             $stmt = $conn->prepare("UPDATE tailors SET is_verified = 0, verified_by_admin_id = NULL, verified_at = NULL WHERE id = ?");
@@ -34,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
             logActivity('unverify_tailor', "Unverified tailor ID: $tailor_id", 'tailor', $tailor_id);
             $success_message = "Tailor unverified successfully!";
+
+            // Send unverification notification to tailor
+            $notificationService->notifyVerification($tailor_id, false);
         } elseif ($action === 'block') {
             // Block tailor
             $stmt = $conn->prepare("UPDATE tailors SET is_blocked = 1, blocked_at = NOW(), blocked_by_admin_id = ? WHERE id = ?");

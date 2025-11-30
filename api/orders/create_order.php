@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 define('DB_ACCESS', true);
 require_once '../../config/db.php';
 require_once '../../services/OrderService.php';
+require_once '../../services/NotificationService.php';
 
 try {
     // Get POST data (supporting both old and new fields)
@@ -87,6 +88,7 @@ try {
 
     // Create service instance
     $orderService = new OrderService($conn);
+    $notificationService = new NotificationService($conn);
 
     // Decide which method to use based on whether enhanced fields are present
     $hasEnhancedFields = isset($_POST['fabric_type']) || isset($_POST['measurement_id']) ||
@@ -98,6 +100,23 @@ try {
     } else {
         // Use legacy method for backward compatibility
         $result = $orderService->createOrder($orderData);
+    }
+
+    // If order was created successfully, send notification to tailor
+    if ($result['success'] && isset($result['order_id'])) {
+        // Get customer and tailor details for notification
+        $customer_query = $conn->prepare("SELECT full_name FROM customers WHERE id = ?");
+        $customer_query->bind_param("i", $_SESSION['user_id']);
+        $customer_query->execute();
+        $customer_result = $customer_query->get_result();
+        $customer_data = $customer_result->fetch_assoc();
+
+        $notificationService->notifyNewOrder(
+            $orderData['tailor_id'],
+            $result['order_id'],
+            $customer_data['full_name'] ?? 'A customer',
+            $orderData['garment_type'] ?? 'custom garment'
+        );
     }
 
     // Set HTTP status code

@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 define('DB_ACCESS', true);
 require_once '../../config/db.php';
 require_once '../../services/OrderService.php';
+require_once '../../services/NotificationService.php';
 
 try {
     // Get POST data
@@ -48,6 +49,7 @@ try {
 
     // Create service instance
     $orderService = new OrderService($conn);
+    $notificationService = new NotificationService($conn);
 
     // Update status with history recording
     $result = $orderService->updateOrderStatusWithHistory(
@@ -57,6 +59,29 @@ try {
         $_SESSION['user_type'],
         $notes
     );
+
+    // If status update was successful, send notification to customer
+    if ($result['success']) {
+        // Get order details for notification
+        $order_query = $conn->prepare(
+            "SELECT o.customer_id, t.shop_name 
+             FROM orders o 
+             LEFT JOIN tailors t ON o.tailor_id = t.id 
+             WHERE o.id = ?"
+        );
+        $order_query->bind_param("i", $order_id);
+        $order_query->execute();
+        $order_result = $order_query->get_result();
+
+        if ($order_data = $order_result->fetch_assoc()) {
+            $notificationService->notifyOrderStatus(
+                $order_data['customer_id'],
+                $order_id,
+                $new_status,
+                $order_data['shop_name'] ?? 'Your tailor'
+            );
+        }
+    }
 
     // Set HTTP status code
     http_response_code($result['success'] ? 200 : 400);

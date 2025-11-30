@@ -484,6 +484,10 @@ $shop_name = $_SESSION['shop_name'];
 
             .detail-value {
                 font-size: 0.9rem;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 0.5rem;
             }
 
             .customer-info {
@@ -752,6 +756,21 @@ $shop_name = $_SESSION['shop_name'];
                                 <span class="detail-label">Garment Type:</span>
                                 <span class="detail-value">${order.garment_type}</span>
                             </div>
+                            ${order.fabric_type ? `
+                            <div class="detail-row">
+                                <span class="detail-label">Fabric Type:</span>
+                                <span class="detail-value">${order.fabric_type}</span>
+                            </div>
+                            ` : ''}
+                            ${order.fabric_color ? `
+                            <div class="detail-row">
+                                <span class="detail-label">Fabric Color:</span>
+                                <span class="detail-value">
+                                    ${order.fabric_color}
+                                    <span style="display: inline-block; width: 20px; height: 20px; background-color: ${order.fabric_color}; border: 1px solid #ccc; border-radius: 3px; margin-left: 8px; vertical-align: middle;"></span>
+                                </span>
+                            </div>
+                            ` : ''}
                             <div class="detail-row">
                                 <span class="detail-label">Quantity:</span>
                                 <span class="detail-value">${order.quantity}</span>

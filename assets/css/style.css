@@ -252,6 +252,281 @@ body {
     font-size: 1.1rem;
 }
 
+/* === NOTIFICATION STYLES === */
+.notification-container {
+    position: relative;
+    margin-left: 0.75rem;
+}
+
+.btn-notification {
+    position: relative;
+    padding: 0.65rem 0.85rem;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-notification:hover {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(88, 209, 249, 0.3);
+}
+
+.btn-notification i {
+    font-size: 1.1rem;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+    color: white;
+    border-radius: 50%;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.notification-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 380px;
+    max-height: 500px;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.notification-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.notification-header {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(88, 209, 249, 0.05), rgba(75, 162, 130, 0.05));
+}
+
+.notification-header h3 {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin: 0;
+    font-weight: 600;
+}
+
+.mark-all-read {
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.mark-all-read:hover {
+    background: rgba(88, 209, 249, 0.1);
+    color: var(--secondary-color);
+}
+
+.notification-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.notification-item:hover {
+    background: rgba(88, 209, 249, 0.05);
+}
+
+.notification-item.unread {
+    background: rgba(88, 209, 249, 0.08);
+}
+
+.notification-item.unread::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 0 4px 4px 0;
+}
+
+.notification-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.notification-title i {
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+.notification-message {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-bottom: 0.4rem;
+}
+
+.notification-time {
+    font-size: 0.75rem;
+    color: #a0aec0;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.notification-time i {
+    font-size: 0.7rem;
+}
+
+.notification-empty {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.notification-empty i {
+    font-size: 3rem;
+    color: var(--border-color);
+    margin-bottom: 1rem;
+}
+
+.notification-empty p {
+    font-size: 0.95rem;
+    margin: 0.5rem 0;
+}
+
+.notification-login-prompt {
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+}
+
+.notification-login-prompt i {
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    animation: wave 1.5s infinite;
+}
+
+@keyframes wave {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(15deg);
+    }
+    75% {
+        transform: rotate(-15deg);
+    }
+}
+
+.notification-login-prompt h4 {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.notification-login-prompt p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.notification-login-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: var(--radius-lg);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(88, 209, 249, 0.3);
+}
+
+.notification-login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(88, 209, 249, 0.4);
+}
+
+/* Scrollbar for notification list */
+.notification-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notification-list::-webkit-scrollbar-track {
+    background: rgba(226, 232, 240, 0.3);
+}
+
+.notification-list::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 3px;
+}
+
+.notification-list::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
 /* Search Icon */
 .nav-search {
     margin-left: 1.5rem;
@@ -773,6 +1048,31 @@ body {
         align-items: center;
         gap: 0.5rem;
     }
+    
+    /* Notification styles for mobile */
+    .notification-container {
+        margin-left: 0.5rem;
+    }
+    
+    .btn-notification {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+    }
+    
+    .notification-dropdown {
+        width: 90vw;
+        right: -20px;
+        max-width: 350px;
+    }
+    
+    .notification-badge {
+        top: -3px;
+        right: -3px;
+        min-width: 18px;
+        height: 18px;
+        font-size: 0.65rem;
+    }
 
     .nav-search {
         order: 2;
@@ -932,8 +1232,9 @@ body {
         gap: 0.75rem;
     }
     
+    /* Hide logo text on mobile to save space */
     .logo-text {
-        font-size: 0.85rem;
+        display: none;
     }
     
     .logo-img {
@@ -2093,5 +2394,285 @@ body {
     .form-input,
     #otpCode {
         min-height: 44px;
+    }
+}
+
+/* ============================================
+   DYNAMIC MEASUREMENT FIELDS STYLES
+   ============================================ */
+
+/* Measurement Options Radio Buttons */
+.measurement-options label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s ease;
+}
+
+.measurement-options label:hover {
+    background-color: var(--light-bg);
+}
+
+.measurement-options input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+/* Measurement Message Box */
+.measurement-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #2d5016;
+}
+
+.measurement-message i {
+    font-size: 1.1rem;
+}
+
+/* Measurement Grid Layout */
+.measurement-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.measurement-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.measurement-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 0.2rem;
+}
+
+.measurement-input {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.measurement-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(88, 209, 249, 0.1);
+}
+
+.measurement-input::placeholder {
+    color: #a0aec0;
+    font-size: 0.875rem;
+}
+
+/* Custom Measurement Fields Container */
+.custom-measurement-fields {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Responsive - Tablet */
+@media (max-width: 768px) {
+    .measurement-grid {
+        grid-template-columns: 1fr;
+        gap: 0.875rem;
+    }
+    
+    .measurement-options label {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+    }
+    
+    .measurement-label {
+        font-size: 0.875rem;
+    }
+    
+    .measurement-input {
+        padding: 0.65rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile Responsive - Phone */
+@media (max-width: 480px) {
+    .measurement-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .measurement-options {
+        margin-bottom: 0.75rem !important;
+    }
+    
+    .measurement-options label {
+        font-size: 0.85rem;
+        padding: 0.35rem;
+    }
+    
+    .measurement-options input[type="radio"] {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .measurement-message {
+        font-size: 0.8rem;
+        padding: 0.6rem !important;
+    }
+    
+    .measurement-message i {
+        font-size: 1rem;
+    }
+    
+    .measurement-field-group {
+        gap: 0.3rem;
+    }
+    
+    .measurement-label {
+        font-size: 0.85rem;
+    }
+    
+    .measurement-input {
+        padding: 0.6rem;
+        font-size: 0.875rem;
+        min-height: 44px; /* Touch-friendly */
+    }
+    
+    .measurement-input::placeholder {
+        font-size: 0.8rem;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .measurement-options label {
+        min-height: 44px;
+        padding: 0.6rem;
+    }
+    
+    .measurement-input {
+        min-height: 48px;
+    }
+}
+
+/* ============================================
+   MEASUREMENT VALIDATION STYLES
+   ============================================ */
+
+/* Error message for missing default measurement */
+.measurement-error {
+    animation: shakeError 0.5s ease-in-out;
+}
+
+.measurement-error a {
+    font-weight: 600;
+}
+
+.measurement-error a:hover {
+    text-decoration: underline !important;
+}
+
+@keyframes shakeError {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Disabled radio button style */
+input[type="radio"]:disabled + label,
+input[type="radio"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+label:has(input[type="radio"]:disabled) {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Mobile Responsive - Measurement Validation */
+@media (max-width: 768px) {
+    .measurement-error,
+    .measurement-message {
+        padding: 0.65rem !important;
+        font-size: 0.9rem;
+    }
+
+    .measurement-error strong {
+        font-size: 0.95rem;
+    }
+
+    .measurement-error small,
+    .measurement-message small {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+}
+
+@media (max-width: 480px) {
+    .measurement-error,
+    .measurement-message {
+        padding: 0.6rem !important;
+        font-size: 0.85rem;
+    }
+
+    .measurement-error strong {
+        font-size: 0.9rem;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .measurement-error small,
+    .measurement-message small {
+        font-size: 0.8rem;
+        line-height: 1.5;
+        display: block;
+        margin-top: 0.25rem;
+    }
+
+    .measurement-error br {
+        display: none;
+    }
+
+    .measurement-error a,
+    .measurement-message a {
+        word-break: break-word;
+    }
+
+    /* Touch-friendly radio buttons on mobile */
+    .measurement-options label {
+        padding: 0.65rem 0.5rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    .measurement-options input[type="radio"] {
+        width: 20px;
+        height: 20px;
+        min-width: 20px;
+        margin-right: 0.5rem;
     }
 }

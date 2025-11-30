@@ -410,9 +410,70 @@ $user_type = $is_logged_in ? $_SESSION['user_type'] : '';
 
                 <!-- Garment Type -->
                 <div class="form-group">
-                    <label class="form-label">Garment Type</label>
-                    <input type="text" name="garment_type" class="form-input"
-                        placeholder="e.g., Shirt, Pants, Kurta, Dress" required>
+                    <label class="form-label">Garment Type *</label>
+                    <select name="garment_type" class="form-input form-select" required>
+                        <option value="">Select garment type</option>
+                        <optgroup label="Men's Wear">
+                            <option value="Shirt">Shirt</option>
+                            <option value="Pants">Pants/Trousers</option>
+                            <option value="Suit">Suit</option>
+                            <option value="Kurta">Kurta</option>
+                            <option value="Sherwani">Sherwani</option>
+                            <option value="Blazer">Blazer</option>
+                            <option value="Waistcoat">Waistcoat</option>
+                        </optgroup>
+                        <optgroup label="Women's Wear">
+                            <option value="Blouse">Blouse</option>
+                            <option value="Saree">Saree</option>
+                            <option value="Salwar Kameez">Salwar Kameez</option>
+                            <option value="Lehenga">Lehenga</option>
+                            <option value="Dress">Dress</option>
+                            <option value="Gown">Gown</option>
+                            <option value="Kurti">Kurti</option>
+                        </optgroup>
+                        <optgroup label="Kids Wear">
+                            <option value="Kids Shirt">Kids Shirt</option>
+                            <option value="Kids Dress">Kids Dress</option>
+                            <option value="Kids Frock">Kids Frock</option>
+                        </optgroup>
+                        <option value="Other">Other (Specify in instructions)</option>
+                    </select>
+                </div>
+
+                <!-- Fabric Type -->
+                <div class="form-group">
+                    <label class="form-label">Fabric Type *</label>
+                    <select name="fabric_type" class="form-input form-select" required>
+                        <option value="">Select fabric type</option>
+                        <option value="Cotton">Cotton</option>
+                        <option value="Silk">Silk</option>
+                        <option value="Linen">Linen</option>
+                        <option value="Polyester">Polyester</option>
+                        <option value="Wool">Wool</option>
+                        <option value="Denim">Denim</option>
+                        <option value="Chiffon">Chiffon</option>
+                        <option value="Georgette">Georgette</option>
+                        <option value="Velvet">Velvet</option>
+                        <option value="Satin">Satin</option>
+                        <option value="Crepe">Crepe</option>
+                        <option value="Rayon">Rayon</option>
+                        <option value="Khadi">Khadi</option>
+                        <option value="Mixed/Blend">Mixed/Blend</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Fabric Color -->
+                <div class="form-group">
+                    <label class="form-label">Fabric Color *</label>
+                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 0.5rem;">
+                        <input type="text" name="fabric_color" id="fabricColorText" class="form-input"
+                            placeholder="Enter color name" required>
+                        <input type="color" id="fabricColorPicker" class="form-input" value="#000000"
+                            style="width: 60px; height: 45px; padding: 5px; cursor: pointer;"
+                            title="Pick a color">
+                    </div>
+                    <small style="color: var(--text-light);">Type color name or use color picker</small>
                 </div>
 
                 <!-- Quantity -->
@@ -424,10 +485,44 @@ $user_type = $is_logged_in ? $_SESSION['user_type'] : '';
 
                 <!-- Measurements -->
                 <div class="form-group">
-                    <label class="form-label">Measurements (Optional)</label>
-                    <textarea name="measurements" class="form-input form-textarea"
-                        placeholder="Chest: 40, Waist: 32, Length: 28, etc."></textarea>
-                    <small style="color: var(--text-light);">You can discuss detailed measurements with the tailor</small>
+                    <label class="form-label">Measurements</label>
+
+                    <!-- Measurement Options -->
+                    <div class="measurement-options" style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem;">
+                            <input type="radio" name="measurement_option" value="default" id="measurementDefault" checked>
+                            Use My Default Measurements
+                        </label>
+                        <label style="display: block;">
+                            <input type="radio" name="measurement_option" value="custom" id="measurementCustom">
+                            Enter Custom Measurements
+                        </label>
+                    </div>
+
+                    <!-- No Default Measurement Error -->
+                    <div id="noDefaultError" class="measurement-error" style="display: none; padding: 0.75rem; background: #fee; border-left: 3px solid #f44336; border-radius: 4px; margin-bottom: 1rem; color: #c62828;">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>No default measurement found!</strong><br>
+                        <small>You don't have a saved measurement for this garment type. Please select "Enter Custom Measurements" or <a href="customer/measurements.php" style="color: #1976d2; text-decoration: underline;">create a measurement profile</a> first.</small>
+                    </div>
+
+                    <!-- Default Measurements Message -->
+                    <div id="defaultMeasurementMsg" class="measurement-message" style="display: block; padding: 0.75rem; background: #e8f5e9; border-left: 3px solid #4caf50; border-radius: 4px; margin-bottom: 1rem;">
+                        <i class="fas fa-info-circle"></i> Your saved default measurements will be used for this order.
+                    </div>
+
+                    <!-- Custom Measurement Fields Container -->
+                    <div id="customMeasurementFields" class="custom-measurement-fields" style="display: none;">
+                        <div id="dynamicMeasurementFields">
+                            <!-- Fields will be dynamically populated based on garment type -->
+                            <p style="color: var(--text-light); font-style: italic;">
+                                <i class="fas fa-arrow-up"></i> Please select a garment type first
+                            </p>
+                        </div>
+                    </div>
+
+                    <small style="color: var(--text-light); display: block; margin-top: 0.5rem;">
+                        Make sure your measurements are accurate for the best fit
+                    </small>
                 </div>
 
                 <!-- Special Instructions -->
@@ -508,6 +603,27 @@ $user_type = $is_logged_in ? $_SESSION['user_type'] : '';
                         <span class="login-text-short">Login</span>
                     </button>
                 <?php endif; ?>
+
+                <!-- Notification Icon -->
+                <div class="notification-container">
+                    <button class="btn-notification" id="notificationBtn" onclick="toggleNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                    </button>
+
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <button class="mark-all-read" id="markAllReadBtn" onclick="markAllAsRead()">
+                                Mark all as read
+                            </button>
+                        </div>
+                        <div class="notification-list" id="notificationList">
+                            <!-- Notifications will be loaded here -->
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Admin Login Button (Always visible) -->
                 <button class="btn-admin-login" onclick="window.location.href='admin/'" title="Admin Portal">
@@ -722,6 +838,12 @@ $user_type = $is_logged_in ? $_SESSION['user_type'] : '';
     <!-- Map Integration Script -->
     <script src="assets/js/map-integration.js"></script>
 
+    <!-- Notification System Script -->
+    <script src="assets/js/notifications.js"></script>
+
+    <!-- Dynamic Measurement Fields Script -->
+    <script src="assets/js/measurement-fields.js"></script>
+
     <!-- Custom JavaScript -->
     <!-- app.js already loaded above -->
     <script>
@@ -729,14 +851,100 @@ $user_type = $is_logged_in ? $_SESSION['user_type'] : '';
         fetch('api/get_stats.php')
             .then(response => response.json())
             .then(data => {
-                document.getElementById('tailorCount').textContent = data.tailors || 3;
-                document.getElementById('customerCount').textContent = data.customers || 1;
+                if (data.success && data.data) {
+                    document.getElementById('tailorCount').textContent = data.data.registered_tailors || 0;
+                    document.getElementById('customerCount').textContent = data.data.happy_customers || 0;
+                }
             })
             .catch(error => {
-                // Default values if API fails
-                document.getElementById('tailorCount').textContent = '3';
-                document.getElementById('customerCount').textContent = '1';
+                console.error('Error loading stats:', error);
+                // Keep showing 0 if API fails
+                document.getElementById('tailorCount').textContent = '0';
+                document.getElementById('customerCount').textContent = '0';
             });
+
+        // Fabric color picker sync
+        document.addEventListener('DOMContentLoaded', function() {
+            const colorPicker = document.getElementById('fabricColorPicker');
+            const colorText = document.getElementById('fabricColorText');
+
+            if (colorPicker && colorText) {
+                // When color picker changes, update text input
+                colorPicker.addEventListener('input', function() {
+                    const hexColor = this.value;
+                    const colorName = getColorName(hexColor);
+                    colorText.value = colorName;
+                });
+
+                // When text input changes, try to update color picker
+                colorText.addEventListener('input', function() {
+                    const colorName = this.value.toLowerCase();
+                    const hexColor = getHexFromColorName(colorName);
+                    if (hexColor) {
+                        colorPicker.value = hexColor;
+                    }
+                });
+            }
+        });
+
+        // Convert hex to approximate color name
+        function getColorName(hex) {
+            const colorNames = {
+                '#ff0000': 'Red',
+                '#00ff00': 'Green',
+                '#0000ff': 'Blue',
+                '#ffff00': 'Yellow',
+                '#ff00ff': 'Magenta',
+                '#00ffff': 'Cyan',
+                '#ffffff': 'White',
+                '#000000': 'Black',
+                '#808080': 'Gray',
+                '#ffc0cb': 'Pink',
+                '#ffa500': 'Orange',
+                '#800080': 'Purple',
+                '#a52a2a': 'Brown',
+                '#ffd700': 'Gold',
+                '#c0c0c0': 'Silver',
+                '#008080': 'Teal',
+                '#000080': 'Navy',
+                '#800000': 'Maroon'
+            };
+
+            // If exact match exists
+            if (colorNames[hex.toLowerCase()]) {
+                return colorNames[hex.toLowerCase()];
+            }
+
+            // Otherwise return the hex value
+            return hex;
+        }
+
+        // Convert common color names to hex
+        function getHexFromColorName(name) {
+            const colors = {
+                'red': '#ff0000',
+                'green': '#00ff00',
+                'blue': '#0000ff',
+                'yellow': '#ffff00',
+                'magenta': '#ff00ff',
+                'cyan': '#00ffff',
+                'white': '#ffffff',
+                'black': '#000000',
+                'gray': '#808080',
+                'grey': '#808080',
+                'pink': '#ffc0cb',
+                'orange': '#ffa500',
+                'purple': '#800080',
+                'brown': '#a52a2a',
+                'gold': '#ffd700',
+                'silver': '#c0c0c0',
+                'teal': '#008080',
+                'navy': '#000080',
+                'maroon': '#800000'
+            };
+
+            return colors[name] || null;
+        }
     </script>
 </body>
 
