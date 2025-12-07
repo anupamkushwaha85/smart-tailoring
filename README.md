@@ -49,7 +49,7 @@ A comprehensive web-based platform connecting customers with tailors for custom 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/smart-tailoring.git
+git clone https://github.com/anupamkushwaha85/smart-tailoring.git
 cd smart-tailoring
 ```
 
@@ -171,7 +171,7 @@ Create an admin account in the database:
 
 ```sql
 INSERT INTO admins (username, password, name, email, role, created_at)
-VALUES ('admin', '$2y$10$[hashed_password]', 'Administrator', 'admin@example.com', 'super_admin', NOW());
+VALUES ('admin', '$2y$10$[hashed_password]', 'Administrator', 'anupamkushwaha639@gmail.com', 'super_admin', NOW());
 ```
 
 Generate password hash:
@@ -307,7 +307,7 @@ DELETE /api/orders/cancel_order.php
 1. Create new repository on GitHub
 2. Add remote:
    ```bash
-   git remote add origin https://github.com/yourusername/smart-tailoring.git
+   git remote add origin https://github.com/anupamkushwaha85/smart-tailoring.git
    ```
 3. Push code:
    ```bash
@@ -423,13 +423,21 @@ php database/migrate.php run
 
 ## License
 
-This project is proprietary software. All rights reserved.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+**Anupam Kushwaha**
+- Email: [anupamkushwaha639@gmail.com](mailto:anupamkushwaha639@gmail.com)
+- LinkedIn: [linkedin.com/in/anupamkushwaha85](https://linkedin.com/in/anupamkushwaha85)
+- GitHub: [@anupamkushwaha85](https://github.com/anupamkushwaha85)
 
 ## Support
 
 For issues and questions:
-- Email: support@smarttailoring.com
-- GitHub Issues: https://github.com/yourusername/smart-tailoring/issues
+- **Email**: [anupamkushwaha639@gmail.com](mailto:anupamkushwaha639@gmail.com)
+- **LinkedIn**: [linkedin.com/in/anupamkushwaha85](https://linkedin.com/in/anupamkushwaha85)
+- **GitHub Issues**: [github.com/anupamkushwaha85/smart-tailoring/issues](https://github.com/anupamkushwaha85/smart-tailoring/issues)
 
 ## Changelog
 
