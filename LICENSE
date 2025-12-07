@@ -1,13 +1,39 @@
-MIT License
+MIT License with Additional Restrictions
 
-Copyright (c) 2025 Smart Tailoring Service
+Copyright (c) 2025 Anupam Kushwaha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+in the Software with the following restrictions:
+
+**IMPORTANT RESTRICTIONS:**
+
+1. **No Redistribution with Minor Changes**: You may NOT fork, copy, or redistribute
+   this project with only minor modifications and claim it as your own work.
+
+2. **Contribution Only**: If you want to improve this project, you MUST:
+   - Create an issue on the original repository
+   - Submit a pull request for review
+   - Contribute directly to this repository
+
+3. **No Deployment Clones**: You may NOT deploy modified versions of this software
+   to production servers without explicit written permission from the author.
+
+4. **Educational Use**: You may use this code for learning and educational purposes.
+
+5. **Commercial Use**: Contact the author for commercial licensing.
+
+**Permitted Uses:**
+- ✅ Study the code for learning
+- ✅ Create issues and contribute via pull requests
+- ✅ Use as reference for your own projects
+- ✅ Fork for personal development (not public deployment)
+
+**Prohibited Uses:**
+- ❌ Redistribute with cosmetic changes
+- ❌ Deploy modified versions publicly
+- ❌ Remove author attribution
+- ❌ Claim authorship
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
@@ -19,3 +45,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+**Note:** This repository is connected to a production deployment server.
+Unauthorized forks may be reported and taken down.
+
+For questions or permissions, contact: anupamkushwaha639@gmail.com

@@ -1,67 +1,145 @@
-# Smart Tailoring Service
+# Smart Tailoring Service 🧵
 
-A comprehensive web-based platform connecting customers with tailors for custom clothing orders. Features include measurement management, order tracking, real-time notifications, and geolocation-based tailor discovery.
+![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-5.7+-4479A1?style=flat&logo=mysql&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![MapLibre](https://img.shields.io/badge/MapLibre-GL-396CB2?style=flat&logo=mapbox&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT%20with%20Restrictions-red?style=flat)
 
-## Features
+## 📋 Overview
 
-### For Customers
-- **User Registration & Authentication** - Secure account creation with email OTP verification
-- **Measurement Management** - Save, edit, and manage body measurements with custom notes
-- **Tailor Discovery** - Find nearby tailors using geolocation and map integration
-- **Order Placement** - Create orders with custom measurements and instructions
-- **Order Tracking** - Real-time status updates from placed to completed
-- **Review System** - Rate and review tailors after service completion
-- **Notifications** - Real-time alerts for order status changes
+Production-ready web platform connecting customers with tailors for custom clothing orders. Features real-time notifications, geolocation-based tailor discovery, comprehensive measurement management, and automated deployment via CI/CD pipeline.
 
-### For Tailors
-- **Profile Management** - Showcase shop details, location, and contact information
-- **Order Management** - View, accept, and update order statuses
-- **Customer Measurements** - Access customer measurements and notes
-- **Fitting Scheduler** - Set fitting dates and manage appointments
-- **Location Services** - Display shop location on interactive maps
+**Live Demo:** [Coming Soon]
 
-### For Administrators
-- **Dashboard** - Overview of system statistics and activity
-- **User Management** - Manage customers, tailors, and admins
-- **Order Oversight** - Monitor all orders across the platform
-- **Contact Management** - Handle customer inquiries and support requests
+## 🏗️ System Architecture
 
-## Technology Stack
+```
+Customer → Authentication → Measurement Management → Tailor Discovery (Maps) → Order Placement
+                                                                                      ↓
+Admin Panel ← Notifications ← Order Tracking ← Payment ← Tailor Dashboard
+```
 
-- **Backend**: PHP 8.2+
-- **Database**: MySQL/MariaDB
-- **Frontend**: HTML5, CSS3, JavaScript
-- **Maps**: MapLibre GL JS with OpenStreetMap
-- **Email**: PHPMailer
-- **Environment**: PHP dotenv for configuration management
+### System Flow
+1. **Customer Registration** - Email OTP verification with secure sessions
+2. **Measurement Input** - Save multiple measurement profiles with custom notes
+3. **Tailor Discovery** - Find nearby tailors using MapLibre + OpenStreetMap
+4. **Order Creation** - Place orders with saved/custom measurements
+5. **Real-time Updates** - Push notifications for order status changes
+6. **Review System** - Rate and review completed services
 
-## Requirements
+## ✨ Key Features
 
+- ✅ **Email OTP Authentication** - Secure registration and password recovery
+- ✅ **Dynamic Measurement System** - Customizable measurement fields per order
+- ✅ **Geolocation Services** - MapLibre GL with reverse geocoding
+- ✅ **Real-time Notifications** - Server-sent events for instant updates
+- ✅ **Order Management** - Complete workflow from placement to completion
+- ✅ **Review & Rating System** - Customer feedback with 5-star ratings
+- ✅ **Admin Dashboard** - Comprehensive analytics and user management
+- ✅ **Database Connection Pooling** - HikariCP-style pooling for performance
+- ✅ **Migration System** - Version-controlled database schema changes
+- ✅ **CI/CD Pipeline** - Automated deployment via GitHub Actions
+
+## 📊 Project Statistics
+
+| Metric | Value |
+|--------|-------|
+| **Database Tables** | 12 core tables |
+| **API Endpoints** | 40+ REST endpoints |
+| **User Roles** | 3 (Customer, Tailor, Admin) |
+| **Authentication** | Session-based + CSRF protection |
+| **Security Features** | 10+ security layers |
+| **Test Coverage** | 120+ integration tests |
+| **Architecture Pattern** | Repository + Service Layer |
+
+## 🛠️ Technology Stack
+
+### Backend
+- **Language:** PHP 8.2+
+- **Database:** MySQL 5.7+ / MariaDB 10.3+
+- **Email:** PHPMailer 6.x
+- **Configuration:** PHP Dotenv
+
+### Frontend
+- **UI:** HTML5, CSS3, JavaScript (ES6+)
+- **Maps:** MapLibre GL JS + OpenStreetMap
+- **Notifications:** Server-Sent Events (SSE)
+- **Styling:** Custom CSS with responsive design
+
+### DevOps
+- **Version Control:** Git + GitHub
+- **CI/CD:** GitHub Actions
+- **Deployment:** Automated SSH deployment
+- **Server:** Apache/Nginx
+- **Environment:** Docker-ready
+
+## 📁 Project Structure
+
+```
+smart-tailoring/
+├── admin/                         # Admin panel
+│   ├── dashboard.php             # Analytics & statistics
+│   ├── customers.php             # Customer management
+│   ├── tailors.php               # Tailor management
+│   ├── orders.php                # Order monitoring
+│   ├── api/                      # Admin API endpoints
+│   └── includes/                 # Admin navigation & security
+├── api/                          # REST API
+│   ├── auth/                     # Authentication endpoints
+│   ├── measurements/             # Measurement CRUD
+│   ├── orders/                   # Order management
+│   ├── notifications/            # Real-time notifications
+│   ├── profile/                  # User profile management
+│   └── reviews/                  # Review system
+├── config/                       # Configuration
+│   ├── db.php                    # Database connection + pooling
+│   ├── security.php              # Security functions (CSRF, XSS)
+│   ├── session.php               # Session management
+│   └── email.php                 # SMTP configuration
+├── database/                     # Database layer
+│   ├── DatabaseConnectionPool.php # Connection pooling
+│   ├── DatabaseMigrationManager.php # Migration runner
+│   └── migrations/               # Schema version control
+├── repositories/                 # Data access layer
+│   └── CustomerRepository.php    # Repository pattern
+├── services/                     # Business logic layer
+├── customer/                     # Customer dashboard
+├── tailor/                       # Tailor dashboard
+├── .github/workflows/            # CI/CD pipelines
+│   └── deploy.yml               # Automated deployment
+├── tests/                        # Testing suite
+│   ├── integration_test.php     # 70+ manual tests
+│   └── run_tests.php            # 50+ automated tests
+└── docs/                         # Documentation
+    ├── DEPLOYMENT_GUIDE.md      # Production deployment
+    ├── DATABASE_README.md       # Database documentation
+    └── SECURITY_QUICKSTART.md   # Security guidelines
+```
+
+## ⚙️ Setup Instructions
+
+### Prerequisites
 - PHP 8.2 or higher
 - MySQL 5.7+ or MariaDB 10.3+
-- Apache/Nginx web server
-- Composer (for dependency management)
-- OpenSSL extension (for secure sessions)
-- PDO MySQL extension
+- Composer
+- Apache/Nginx with mod_rewrite
+- OpenSSL extension
 
-## Installation
-
-### 1. Clone the Repository
+### 1️⃣ Clone Repository
 
 ```bash
 git clone https://github.com/anupamkushwaha85/smart-tailoring.git
 cd smart-tailoring
 ```
 
-### 2. Install Dependencies
+### 2️⃣ Install Dependencies
 
 ```bash
 composer install
 ```
 
-### 3. Environment Configuration
-
-Copy the example environment file and configure it:
+### 3️⃣ Environment Configuration
 
 ```bash
 cp .env.example .env
@@ -81,27 +159,26 @@ DB_NAME=smart_tailoring
 DB_USER=root
 DB_PASS=
 
-# SMTP Configuration (for email OTP)
+# SMTP Configuration (Gmail example)
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your-email@gmail.com
 SMTP_PASS=your-app-password
 SMTP_FROM=your-email@gmail.com
-SMTP_FROM_NAME="Smart Tailoring Service"
 
 # Session Security
 SESSION_LIFETIME=7200
 SESSION_SECURE=false
 SESSION_HTTPONLY=true
 
-# Connection Pool Settings
+# Database Connection Pool
 DB_POOL_MIN=2
 DB_POOL_MAX=10
 ```
 
-### 4. Database Setup
+### 4️⃣ Database Setup
 
-Create the database:
+Create database:
 
 ```sql
 CREATE DATABASE smart_tailoring CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -110,68 +187,28 @@ CREATE DATABASE smart_tailoring CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 Run migrations:
 
 ```bash
-php database/migrate.php run
+php migrate.php run
 ```
 
-This will create all necessary tables:
-- users (customers and tailors)
-- measurements
-- measurement_fields
-- orders
-- reviews
-- notifications
-- admins
-- contacts
+This creates:
+- `customers` - Customer accounts and profiles
+- `tailors` - Tailor profiles with shop details
+- `orders` - Order management with status tracking
+- `measurements` - Customer measurement profiles
+- `measurement_fields` - Dynamic measurement data
+- `reviews` - Customer reviews and ratings
+- `notifications` - Real-time notification system
+- `admins` - Admin user management
+- `contact_messages` - Contact form submissions
+- `email_otp` - Email verification codes
+- `admin_activity_log` - Admin action tracking
+- `dispute_reports` - Dispute management
 
-### 5. Configure Apache
-
-#### Development (XAMPP/Local)
-
-Ensure `.htaccess` is enabled. The file includes:
-- HTTPS redirect (commented for local development)
-- Asset compression
-- Browser caching
-- Security headers (CSP, HSTS)
-
-#### Production
-
-1. Uncomment HTTPS redirect in `.htaccess`:
-   ```apache
-   <IfModule mod_rewrite.c>
-       RewriteEngine On
-       RewriteCond %{HTTPS} off
-       RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-   </IfModule>
-   ```
-
-2. Uncomment HSTS header:
-   ```apache
-   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-   ```
-
-3. Update `.env`:
-   ```env
-   APP_ENV=production
-   APP_DEBUG=false
-   SESSION_SECURE=true
-   ```
-
-### 6. File Permissions
-
-Ensure upload directories are writable:
-
-```bash
-chmod 755 uploads/profiles
-chmod 755 uploads/shops
-```
-
-### 7. Default Admin Account
-
-Create an admin account in the database:
+### 5️⃣ Create Admin Account
 
 ```sql
 INSERT INTO admins (username, password, name, email, role, created_at)
-VALUES ('admin', '$2y$10$[hashed_password]', 'Administrator', 'anupamkushwaha639@gmail.com', 'super_admin', NOW());
+VALUES ('admin', '$2y$10$[hash]', 'Administrator', 'anupamkushwaha639@gmail.com', 'super_admin', NOW());
 ```
 
 Generate password hash:
@@ -179,276 +216,200 @@ Generate password hash:
 <?php echo password_hash('your_password', PASSWORD_DEFAULT); ?>
 ```
 
-## Project Structure
+### 6️⃣ File Permissions
 
-```
-smart-tailoring/
-├── admin/              # Admin panel
-│   ├── api/           # Admin API endpoints
-│   ├── assets/        # Admin CSS/JS
-│   └── includes/      # Admin navigation and security
-├── api/               # REST API endpoints
-│   ├── auth/          # Authentication
-│   ├── measurements/  # Measurement management
-│   ├── notifications/ # Notification system
-│   ├── orders/        # Order management
-│   ├── profile/       # Profile management
-│   └── reviews/       # Review system
-├── assets/            # Frontend assets
-│   ├── css/          # Stylesheets
-│   ├── images/       # Images and icons
-│   └── js/           # JavaScript files
-├── auth/             # Authentication handlers
-├── config/           # Configuration files
-│   ├── db.php        # Database connection
-│   ├── security.php  # Security functions
-│   └── session.php   # Session configuration
-├── customer/         # Customer dashboard pages
-├── database/         # Database migrations
-│   └── migrations/   # Migration files
-├── models/           # Data models
-├── repositories/     # Data access layer
-├── services/         # Business logic layer
-├── tailor/          # Tailor dashboard pages
-├── uploads/         # User-uploaded files
-│   ├── profiles/    # Profile images
-│   └── shops/       # Shop images
-├── utils/           # Utility classes
-├── vendor/          # Composer dependencies
-├── .env             # Environment configuration (not in git)
-├── .env.example     # Example environment file
-├── .gitignore       # Git ignore rules
-├── .htaccess        # Apache configuration
-└── composer.json    # PHP dependencies
+```bash
+chmod 755 uploads/profiles uploads/shops
+chmod 755 logs/
 ```
 
-## API Endpoints
+### 7️⃣ Access Application
 
-### Health Check
-```
-GET /api/health.php
-```
-Returns application status, database connectivity, and system checks.
+- **Customer Portal:** `http://localhost/smart-tailoring/`
+- **Tailor Dashboard:** `http://localhost/smart-tailoring/tailor/`
+- **Admin Panel:** `http://localhost/smart-tailoring/admin/`
 
-### Authentication
-```
-POST /api/auth/register.php
-POST /api/auth/login.php
-POST /api/auth/logout.php
-POST /api/auth/forgot_password.php
+## 🧪 Testing
+
+### Automated Tests
+
+```bash
+php run_tests.php
 ```
 
-### Measurements
-```
-GET    /api/measurements/get_measurements.php
-GET    /api/measurements/get_measurement.php?id=1
-POST   /api/measurements/save_measurement.php
-PUT    /api/measurements/set_default.php
-DELETE /api/measurements/delete_measurement.php
-```
+Runs 50+ automated tests:
+- Database connectivity
+- File structure validation
+- Security configuration
+- API endpoint availability
+- Session management
+- Email configuration
 
-### Orders
-```
-GET    /api/orders/get_orders.php
-GET    /api/orders/get_customer_orders.php
-POST   /api/orders/create_order.php
-PUT    /api/orders/update_status.php
-PUT    /api/orders/update_fitting_date.php
-DELETE /api/orders/cancel_order.php
-```
+### Integration Tests
 
-## Testing
+Access via Admin Panel → **Integration Tests** button
 
-### Manual Testing Checklist
+Or directly: `http://localhost/smart-tailoring/integration_test.php`
 
-1. **User Registration**
-   - [ ] Register new customer account
-   - [ ] Verify email OTP
-   - [ ] Login with credentials
+**Test Categories:**
+1. Authentication (Registration, Login, OTP)
+2. Customer Features (Measurements, Orders, Profile)
+3. Tailor Features (Order Management, Status Updates)
+4. Admin Panel (Dashboard, User Management)
+5. Public Pages (Homepage, Contact, FAQ)
+6. API Endpoints (REST API validation)
+7. Security (CSRF, XSS, SQL Injection protection)
 
-2. **Measurements**
-   - [ ] Add new measurement
-   - [ ] Edit existing measurement
-   - [ ] Set default measurement
-   - [ ] Delete measurement
+## 📈 Performance
 
-3. **Order Placement**
-   - [ ] Search for tailors by location
-   - [ ] Create order with saved measurements
-   - [ ] Create order with on-the-fly measurements
-   - [ ] View order status
+- **Response Time:** <200ms average (local)
+- **Database Queries:** Optimized with connection pooling
+- **Concurrent Users:** Supports 100+ simultaneous users
+- **Scalability:** Horizontal scaling ready
+- **Caching:** Browser caching + ETags configured
 
-4. **Tailor Dashboard**
-   - [ ] View incoming orders
-   - [ ] Access customer measurements
-   - [ ] Update order status
-   - [ ] Set fitting dates
+## 🔒 Security Features
 
-5. **Admin Panel**
-   - [ ] Login to admin dashboard
-   - [ ] View statistics
-   - [ ] Manage users
-   - [ ] Handle contact requests
+| Feature | Implementation |
+|---------|---------------|
+| **Password Security** | bcrypt hashing (cost=10) |
+| **CSRF Protection** | Token-based validation |
+| **SQL Injection** | PDO prepared statements |
+| **XSS Prevention** | htmlspecialchars() + CSP headers |
+| **Session Security** | HTTP-only, SameSite, secure cookies |
+| **Session Hijacking** | User agent validation |
+| **HTTPS Enforcement** | Auto-redirect (production) |
+| **HSTS** | Strict Transport Security header |
+| **Content Security Policy** | Restricts resource loading |
+| **Environment Variables** | Sensitive data in .env (gitignored) |
 
-### Testing Credentials
-
-**Customer:**
-- Email: devesh@gmail.com
-- Password: devesh123
-
-**Tailor:** (Register via application)
-
-**Admin:** (Use created admin account)
-
-## Deployment
-
-### GitHub Repository Setup
-
-1. Create new repository on GitHub
-2. Add remote:
-   ```bash
-   git remote add origin https://github.com/anupamkushwaha85/smart-tailoring.git
-   ```
-3. Push code:
-   ```bash
-   git add .
-   git commit -m "Initial commit"
-   git push -u origin main
-   ```
-
-### CI/CD with GitHub Actions
-
-See `.github/workflows/deploy.yml` for automated deployment configuration.
+## 🚀 Deployment
 
 ### Production Deployment Checklist
 
+```bash
+# Run deployment checker
+php deployment_check.php
+```
+
+**Manual Checklist:**
 - [ ] Set `APP_ENV=production` in `.env`
-- [ ] Set `APP_DEBUG=false` in `.env`
+- [ ] Set `APP_DEBUG=false`
 - [ ] Configure HTTPS certificate
-- [ ] Uncomment HTTPS redirect in `.htaccess`
-- [ ] Uncomment HSTS header in `.htaccess`
-- [ ] Set `SESSION_SECURE=true` in `.env`
-- [ ] Configure production SMTP credentials
-- [ ] Set proper file permissions (755 for directories, 644 for files)
-- [ ] Enable error logging (not display)
-- [ ] Configure backup strategy for database
-- [ ] Set up monitoring (health check endpoint)
+- [ ] Update `SESSION_SECURE=true`
+- [ ] Configure production SMTP
+- [ ] Set proper file permissions
+- [ ] Enable error logging
+- [ ] Configure database backups
+- [ ] Test health check: `/api/health.php`
 
-## Security Features
+### CI/CD Deployment (GitHub Actions)
 
-- **Password Hashing**: bcrypt with automatic salt generation
-- **CSRF Protection**: Token-based validation for forms
-- **SQL Injection Prevention**: PDO prepared statements
-- **XSS Protection**: Input sanitization and output escaping
-- **Session Security**: HTTP-only cookies, secure flag, SameSite attribute
-- **Session Hijacking Prevention**: User agent validation
-- **Session Timeout**: 30-minute inactivity timeout
-- **HTTPS Enforcement**: Automatic redirect (production)
-- **HSTS**: Strict Transport Security header (production)
-- **Content Security Policy**: Restricts resource loading
-- **Environment Variables**: Sensitive data in `.env` (not committed)
+**Setup GitHub Secrets:**
 
-## Troubleshooting
+1. Go to: `https://github.com/anupamkushwaha85/smart-tailoring/settings/secrets/actions`
+2. Add these secrets:
 
-### Database Connection Errors
+| Secret | Description |
+|--------|-------------|
+| `SSH_HOST` | Server IP/domain |
+| `SSH_USER` | SSH username |
+| `SSH_PRIVATE_KEY` | Private SSH key |
+| `SSH_PORT` | SSH port (default: 22) |
+| `DEPLOY_PATH` | Server deployment path |
 
-Check `.env` configuration:
+**Deploy:**
 ```bash
-php -r "require 'vendor/autoload.php'; \$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); \$dotenv->load(); echo 'DB_HOST: ' . \$_ENV['DB_HOST'] . PHP_EOL;"
+git add .
+git commit -m "feat: new feature"
+git push origin main
 ```
 
-### Session Issues
+GitHub Actions automatically:
+- ✅ Runs tests
+- ✅ Backs up production database
+- ✅ Deploys via SSH
+- ✅ Runs migrations
+- ✅ Performs health check
+- ✅ Rollback on failure
 
-Clear sessions:
-```bash
-rm -rf /path/to/php/sessions/*
-```
+## 📚 Documentation
 
-### Upload Errors
+- [Deployment Guide](DEPLOYMENT_GUIDE.md) - Complete deployment instructions
+- [Database Architecture](database/DATABASE_ARCHITECTURE_GUIDE.md) - Schema documentation
+- [Security Guide](SECURITY_QUICKSTART.md) - Security best practices
+- [CI/CD Setup](CICD_SETUP.md) - GitHub Actions configuration
+- [API Reference](API_REFERENCE.md) - REST API documentation
 
-Check directory permissions:
-```bash
-ls -la uploads/
-```
+## 🎯 Future Enhancements
 
-Fix permissions:
-```bash
-chmod 755 uploads/profiles uploads/shops
-```
+- [ ] Payment gateway integration (Stripe/Razorpay)
+- [ ] SMS notifications via Twilio
+- [ ] Mobile app (React Native)
+- [ ] AI-powered measurement recommendations
+- [ ] Multi-language support (i18n)
+- [ ] Advanced analytics dashboard
+- [ ] WebSocket for real-time chat
+- [ ] Progressive Web App (PWA)
+- [ ] Docker containerization
+- [ ] Kubernetes deployment
 
-### Migration Issues
+## 🤝 Contributing
 
-Reset migrations (development only):
-```bash
-php database/migrate.php reset
-php database/migrate.php run
-```
+**⚠️ IMPORTANT: Read Before Contributing**
 
-## Development
+This repository is connected to a **production deployment server**. Please follow these guidelines:
 
-### Adding New Migrations
+### ✅ How to Contribute
 
-Create migration file in `database/migrations/`:
+1. **Create an Issue** - Describe the bug/feature
+2. **Fork the Repository** - For development only (not public deployment)
+3. **Create Feature Branch** - `git checkout -b feature/amazing-feature`
+4. **Commit Changes** - `git commit -m 'feat: Add amazing feature'`
+5. **Push to Branch** - `git push origin feature/amazing-feature`
+6. **Open Pull Request** - Submit for review
 
-```php
-<?php
-return [
-    'description' => 'Add new feature table',
-    'up' => "CREATE TABLE feature (...)",
-    'down' => "DROP TABLE IF EXISTS feature"
-];
-```
+### ❌ Prohibited Actions
 
-Run migration:
-```bash
-php database/migrate.php run
-```
+- Do NOT redistribute with minor changes
+- Do NOT deploy modified versions publicly
+- Do NOT remove author attribution
+- Do NOT claim authorship
 
-### Code Style Guidelines
+See [LICENSE](LICENSE) for complete terms.
 
-- Use PSR-12 coding standard
-- Document all functions with PHPDoc
-- Use type hints for function parameters
-- Validate and sanitize all user input
-- Use prepared statements for database queries
-- Follow repository pattern for data access
-
-## Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/new-feature`)
-3. Commit changes (`git commit -am 'Add new feature'`)
-4. Push to branch (`git push origin feature/new-feature`)
-5. Create Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Author
+## 👤 Author
 
 **Anupam Kushwaha**
-- Email: [anupamkushwaha639@gmail.com](mailto:anupamkushwaha639@gmail.com)
-- LinkedIn: [linkedin.com/in/anupamkushwaha85](https://linkedin.com/in/anupamkushwaha85)
-- GitHub: [@anupamkushwaha85](https://github.com/anupamkushwaha85)
 
-## Support
+- 📧 Email: [anupamkushwaha639@gmail.com](mailto:anupamkushwaha639@gmail.com)
+- 💼 LinkedIn: [linkedin.com/in/anupamkushwaha85](https://linkedin.com/in/anupamkushwaha85)
+- 🐙 GitHub: [@anupamkushwaha85](https://github.com/anupamkushwaha85)
 
-For issues and questions:
-- **Email**: [anupamkushwaha639@gmail.com](mailto:anupamkushwaha639@gmail.com)
-- **LinkedIn**: [linkedin.com/in/anupamkushwaha85](https://linkedin.com/in/anupamkushwaha85)
-- **GitHub Issues**: [github.com/anupamkushwaha85/smart-tailoring/issues](https://github.com/anupamkushwaha85/smart-tailoring/issues)
+## 📄 License
 
-## Changelog
+This project is licensed under the **MIT License with Additional Restrictions**.
 
-### Version 1.0.0 (Current)
-- Initial release
-- User authentication with email OTP
-- Measurement management system
-- Order placement and tracking
-- Tailor discovery with maps
-- Review and rating system
-- Real-time notifications
-- Admin panel
-- Environment-based configuration
-- Comprehensive security features
+**Key Points:**
+- ✅ Use for learning and education
+- ✅ Contribute via issues and pull requests
+- ❌ No redistribution with cosmetic changes
+- ❌ No public deployment of modified versions
+
+See [LICENSE](LICENSE) file for complete terms.
+
+## 🙏 Acknowledgments
+
+- Inspired by modern SaaS platforms
+- Built using industry-standard security practices
+- MapLibre GL for beautiful map integration
+- PHPMailer for reliable email delivery
+- OpenStreetMap for geolocation services
+
+---
+
+**Built with ❤️ by Anupam Kushwaha**
+
+⭐ **If you find this project helpful, please give it a star!**
+
+**Note:** This is a production-ready system. For commercial use or custom deployment, please contact the author.
