@@ -1,0 +1,95 @@
+# Render Configuration File
+# https://render.com/docs/blueprint-spec
+
+services:
+  # Web Service (PHP Application)
+  - type: web
+    name: smart-tailoring
+    env: docker
+    plan: free
+    
+    # Build configuration
+    buildCommand: chmod +x build.sh && ./build.sh
+    
+    # Start command (Apache with mod_php)
+    startCommand: apache2-foreground
+    
+    # Runtime environment
+    envVars:
+      # Application Settings
+      - key: APP_ENV
+        value: production
+      
+      - key: APP_DEBUG
+        value: false
+      
+      - key: APP_URL
+        sync: false
+      
+      # Database Configuration (Aiven MySQL)
+      - key: DB_HOST
+        sync: false  # Set in Render dashboard
+      
+      - key: DB_PORT
+        value: 3306
+      
+      - key: DB_USER
+        sync: false
+      
+      - key: DB_PASS
+        sync: false
+      
+      - key: DB_NAME
+        sync: false
+      
+      - key: DB_USE_SSL
+        value: true
+      
+      # Cloudinary Configuration
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      
+      - key: CLOUDINARY_UPLOAD_PRESET
+        sync: false
+      
+      # Session Storage (file or database)
+      - key: SESSION_STORAGE
+        value: file  # Change to 'database' for persistent sessions
+      
+      # SMTP Configuration (optional)
+      - key: SMTP_HOST
+        sync: false
+      
+      - key: SMTP_PORT
+        value: 587
+      
+      - key: SMTP_USER
+        sync: false
+      
+      - key: SMTP_PASS
+        sync: false
+      
+      - key: SMTP_FROM
+        sync: false
+      
+      # Security
+      - key: SESSION_SECURE
+        value: true
+      
+      - key: SESSION_HTTPONLY
+        value: true
+    
+    # Health check endpoint
+    healthCheckPath: /api/health.php
+    
+    # Auto-deploy on git push
+    autoDeploy: true
+    
+    # Dockerfile path (if using custom Docker)
+    # dockerfilePath: ./Dockerfile
+    
+    # Disk storage (not persistent - ephemeral)
+    # Do NOT store uploads here - use Cloudinary
+    
+    # Scaling
+    numInstances: 1
