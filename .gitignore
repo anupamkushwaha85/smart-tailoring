@@ -1,8 +1,8 @@
 # Sensitive configuration files (DO NOT COMMIT)
 # config/db.php (Router is safe to commit)
+# config/email.php (Updated to use env vars, safe to commit)
 config/db_old_backup.php
 config/db_enhanced.php
-config/email.php
 config/config.php
 
 # Environment files
