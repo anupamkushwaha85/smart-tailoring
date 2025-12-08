@@ -10,7 +10,7 @@
 
 Production-ready web platform connecting customers with tailors for custom clothing orders. Features real-time notifications, geolocation-based tailor discovery, comprehensive measurement management, and automated deployment via CI/CD pipeline.
 
-**Live Demo:** [Coming Soon]
+**Live Demo:** [https://smart-tailoring.onrender.com](https://smart-tailoring.onrender.com)
 
 ## 🏗️ System Architecture
 
@@ -126,20 +126,13 @@ smart-tailoring/
 - Apache/Nginx with mod_rewrite
 - OpenSSL extension
 
-### 1️⃣ Clone Repository
-
-```bash
-git clone https://github.com/anupamkushwaha85/smart-tailoring.git
-cd smart-tailoring
-```
-
-### 2️⃣ Install Dependencies
+### 1️⃣ Install Dependencies
 
 ```bash
 composer install
 ```
 
-### 3️⃣ Environment Configuration
+### 2️⃣ Environment Configuration
 
 ```bash
 cp .env.example .env
@@ -176,7 +169,7 @@ DB_POOL_MIN=2
 DB_POOL_MAX=10
 ```
 
-### 4️⃣ Database Setup
+### 3️⃣ Database Setup
 
 Create database:
 
@@ -204,7 +197,7 @@ This creates:
 - `admin_activity_log` - Admin action tracking
 - `dispute_reports` - Dispute management
 
-### 5️⃣ Create Admin Account
+### 4️⃣ Create Admin Account
 
 ```sql
 INSERT INTO admins (username, password, name, email, role, created_at)
@@ -216,14 +209,14 @@ Generate password hash:
 <?php echo password_hash('your_password', PASSWORD_DEFAULT); ?>
 ```
 
-### 6️⃣ File Permissions
+### 5️⃣ File Permissions
 
 ```bash
 chmod 755 uploads/profiles uploads/shops
 chmod 755 logs/
 ```
 
-### 7️⃣ Access Application
+### 6️⃣ Access Application
 
 - **Customer Portal:** `http://localhost/smart-tailoring/`
 - **Tailor Dashboard:** `http://localhost/smart-tailoring/tailor/`
