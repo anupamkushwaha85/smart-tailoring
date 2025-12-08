@@ -144,12 +144,10 @@ $conn = getCloudDatabaseConnection();
 
 if (!$conn) {
     // Critical error - cannot proceed without database
-    if (!defined('SUPPRESS_DB_DIE')) {
-        if (getenv('APP_ENV') === 'production') {
-            die("Database service unavailable. Please try again later.");
-        } else {
-            die("Database Connection Failed. Check your .env configuration.");
-        }
+    if (getenv('APP_ENV') === 'production') {
+        die("Database service unavailable. Please try again later.");
+    } else {
+        die("Database Connection Failed. Check your .env configuration.");
     }
 }
 
