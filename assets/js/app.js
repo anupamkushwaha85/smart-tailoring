@@ -4,6 +4,30 @@
  */
 
 // ============================================
+// UTILITY FUNCTIONS
+// ============================================
+
+// Safe JSON parser for handling malformed API responses
+function safeParseJSON(text) {
+    const jsonStart = text.indexOf('{');
+    if (jsonStart === -1) throw new Error('No JSON found');
+
+    let braceCount = 0;
+    let jsonEnd = jsonStart;
+
+    for (let i = jsonStart; i < text.length; i++) {
+        if (text[i] === '{') braceCount++;
+        if (text[i] === '}') braceCount--;
+        if (braceCount === 0) {
+            jsonEnd = i + 1;
+            break;
+        }
+    }
+
+    return JSON.parse(text.substring(jsonStart, jsonEnd));
+}
+
+// ============================================
 // GLOBAL VARIABLES
 // ============================================
 let currentUser = null;
@@ -740,12 +764,20 @@ function handleLogin() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                showAuthMessage(data.message, 'success');
+                if (data.requires_otp) {
+                    showAuthMessage(data.message, 'success');
+                    setTimeout(() => {
+                        closeAuthModal();
+                        showOTPModal(data.email, data.user_type);
+                    }, 1500);
+                } else {
+                    showAuthMessage(data.message, 'success');
 
-                // Redirect after 1 second
-                setTimeout(() => {
-                    window.location.href = data.redirect;
-                }, 1000);
+                    // Redirect after 1 second
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 1000);
+                }
             } else {
                 showAuthMessage(data.message, 'error');
                 submitBtn.disabled = false;
@@ -790,11 +822,31 @@ function handleRegister() {
         method: 'POST',
         body: formData
     })
-        .then(response => response.json())
+        .then(response => response.text())
+        .then(text => {
+            // Find the complete JSON object with proper brace matching
+            const jsonStart = text.indexOf('{');
+            if (jsonStart === -1) throw new Error('No JSON found');
+
+            let braceCount = 0;
+            let jsonEnd = jsonStart;
+
+            for (let i = jsonStart; i < text.length; i++) {
+                if (text[i] === '{') braceCount++;
+                if (text[i] === '}') braceCount--;
+                if (braceCount === 0) {
+                    jsonEnd = i + 1;
+                    break;
+                }
+            }
+
+            const jsonStr = text.substring(jsonStart, jsonEnd);
+            return JSON.parse(jsonStr);
+        })
         .then(data => {
+            console.log('Registration response:', data);
             if (data.success) {
                 if (data.requires_otp) {
-                    // Show OTP verification modal
                     showAuthMessage(data.message, 'success');
                     setTimeout(() => {
                         closeAuthModal();
@@ -1050,7 +1102,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     body: formData
                 });
 
-                const data = await response.json();
+                const text = await response.text();
+                const data = safeParseJSON(text);
 
                 if (data.success) {
                     // Close forgot password modal and show OTP modal

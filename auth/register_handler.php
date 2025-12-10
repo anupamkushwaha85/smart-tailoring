@@ -78,7 +78,7 @@ try {
         // Register Customer - Using prepared statements
 
         // Check if email already exists
-        $stmt = $conn->prepare("SELECT id FROM customers WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id, email_verified FROM customers WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -86,6 +86,38 @@ try {
         $stmt->close();
 
         if ($existing) {
+            if ($existing['email_verified'] == 0) {
+                // User exists but not verified - Update details and resend OTP
+                $user_id = $existing['id'];
+
+                // Update password and other details
+                $address = isset($_POST['address']) ? trim($_POST['address']) : '';
+                $update_stmt = $conn->prepare("UPDATE customers SET full_name = ?, phone = ?, password = ?, address = ? WHERE id = ?");
+                $update_stmt->bind_param("ssssi", $name, $phone, $password_hash, $address, $user_id);
+                $update_stmt->execute();
+                $update_stmt->close();
+
+                // Send OTP
+                try {
+                    $otpService = new EmailOTPService($conn);
+                    $otp_result = $otpService->sendOTP($email, 'registration', 'customer', $user_id, $name);
+
+                    if ($otp_result['success']) {
+                        echo json_encode([
+                            'success' => true,
+                            'message' => 'Registration updated! Please verify your email with the OTP sent to ' . $email,
+                            'user_type' => 'customer',
+                            'email' => $email,
+                            'user_id' => $user_id,
+                            'requires_otp' => true
+                        ]);
+                        exit;
+                    }
+                } catch (Exception $e) {
+                    // Fall through to error
+                }
+            }
+
             throw new Exception('Email already registered. Please login instead.');
         }
 
@@ -153,7 +185,7 @@ try {
         // Register Tailor - Using prepared statements
 
         // Check if email already exists
-        $stmt = $conn->prepare("SELECT id FROM tailors WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id, email_verified FROM tailors WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -161,6 +193,45 @@ try {
         $stmt->close();
 
         if ($existing) {
+            if ($existing['email_verified'] == 0) {
+                // User exists but not verified - Update details and resend OTP
+                $user_id = $existing['id'];
+
+                // Get tailor-specific fields
+                $shop_address = isset($_POST['shop_address']) ? trim($_POST['shop_address']) : '';
+                $area = isset($_POST['area']) ? trim($_POST['area']) : 'Satna';
+                $speciality = isset($_POST['speciality']) ? trim($_POST['speciality']) : 'General Tailoring';
+                $services = isset($_POST['services']) ? trim($_POST['services']) : 'Stitching, Alteration';
+                $experience = isset($_POST['experience']) ? (int)$_POST['experience'] : 0;
+
+                // Update details
+                $update_stmt = $conn->prepare("UPDATE tailors SET shop_name = ?, owner_name = ?, phone = ?, password = ?, shop_address = ?, area = ?, speciality = ?, services_offered = ?, experience_years = ? WHERE id = ?");
+                $update_stmt->bind_param("ssssssssii", $name, $name, $phone, $password_hash, $shop_address, $area, $speciality, $services, $experience, $user_id);
+                $update_stmt->execute();
+                $update_stmt->close();
+
+                // Send OTP
+                try {
+                    $otpService = new EmailOTPService($conn);
+                    $otp_result = $otpService->sendOTP($email, 'registration', 'tailor', $user_id, $name);
+
+                    if ($otp_result['success']) {
+                        echo json_encode([
+                            'success' => true,
+                            'message' => 'Registration updated! Please verify your email with the OTP sent to ' . $email,
+                            'user_type' => 'tailor',
+                            'email' => $email,
+                            'user_id' => $user_id,
+                            'requires_otp' => true,
+                            'note' => 'Your profile will be reviewed and activated soon.'
+                        ]);
+                        exit;
+                    }
+                } catch (Exception $e) {
+                    // Fall through
+                }
+            }
+
             throw new Exception('Email already registered. Please login instead.');
         }
 

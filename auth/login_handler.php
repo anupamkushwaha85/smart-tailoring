@@ -71,7 +71,7 @@ try {
     // Login based on user type
     if ($user_type === 'customer') {
         // Customer Login - Using prepared statement
-        $stmt = $conn->prepare("SELECT id, full_name, email, phone, password, is_active, is_blocked FROM customers WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id, full_name, email, phone, password, is_active, is_blocked, email_verified FROM customers WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -93,6 +93,24 @@ try {
         // Check if account is active
         if ($user['is_active'] != 1) {
             throw new Exception('Your account has been deactivated. Please contact support.');
+        }
+
+        // Check if email is verified
+        if (isset($user['email_verified']) && $user['email_verified'] == 0) {
+            // Send OTP for email verification
+            require_once '../services/EmailOTPService.php';
+            $otpService = new EmailOTPService($conn);
+            $otp_result = $otpService->sendOTP($email, 'registration', 'customer', $user['id'], $user['full_name']);
+
+            echo json_encode([
+                'success' => true,
+                'message' => 'Email verification required. OTP sent to ' . $email,
+                'requires_otp' => true,
+                'email' => $email,
+                'user_type' => 'customer',
+                'user_id' => $user['id']
+            ]);
+            exit;
         }
 
         // Verify password
@@ -127,7 +145,7 @@ try {
         ]);
     } elseif ($user_type === 'tailor') {
         // Tailor Login - Using prepared statement
-        $stmt = $conn->prepare("SELECT id, shop_name, owner_name, email, phone, password, is_active, is_verified, is_blocked FROM tailors WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id, shop_name, owner_name, email, phone, password, is_active, is_verified, is_blocked, email_verified FROM tailors WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -149,6 +167,24 @@ try {
         // Check if account is active
         if ($user['is_active'] != 1) {
             throw new Exception('Your account has been deactivated. Please contact support.');
+        }
+
+        // Check if email is verified
+        if (isset($user['email_verified']) && $user['email_verified'] == 0) {
+            // Send OTP for email verification
+            require_once '../services/EmailOTPService.php';
+            $otpService = new EmailOTPService($conn);
+            $otp_result = $otpService->sendOTP($email, 'registration', 'tailor', $user['id'], $user['owner_name']);
+
+            echo json_encode([
+                'success' => true,
+                'message' => 'Email verification required. OTP sent to ' . $email,
+                'requires_otp' => true,
+                'email' => $email,
+                'user_type' => 'tailor',
+                'user_id' => $user['id']
+            ]);
+            exit;
         }
 
         // Verify password
