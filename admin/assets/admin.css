@@ -381,6 +381,21 @@ body {
     gap: 0.25rem;
 }
 
+.stat-link-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.stat-link-inline:hover {
+    text-decoration: underline;
+}
+
 /* ============================================
    DASHBOARD GRID
    ============================================ */

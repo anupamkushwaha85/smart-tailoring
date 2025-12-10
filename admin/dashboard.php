@@ -162,8 +162,8 @@ db_close();
                 <div class="stat-content">
                     <h3><?php echo number_format($stats['pending_verifications']); ?></h3>
                     <p>Pending Verifications</p>
+                    <a href="tailors.php?filter=pending" class="stat-link-inline">View All <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <a href="tailors.php?filter=pending" class="stat-link">View All <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="stat-card green">
@@ -213,10 +213,10 @@ db_close();
                 <div class="stat-content">
                     <h3><?php echo number_format($stats['pending_disputes']); ?></h3>
                     <p>Pending Disputes</p>
+                    <?php if ($stats['pending_disputes'] > 0): ?>
+                        <a href="disputes.php" class="stat-link-inline">Resolve <i class="fas fa-arrow-right"></i></a>
+                    <?php endif; ?>
                 </div>
-                <?php if ($stats['pending_disputes'] > 0): ?>
-                    <a href="disputes.php" class="stat-link">Resolve <i class="fas fa-arrow-right"></i></a>
-                <?php endif; ?>
             </div>
         </div>
 
