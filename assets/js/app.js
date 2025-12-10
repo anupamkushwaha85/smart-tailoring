@@ -761,7 +761,27 @@ function handleLogin() {
         method: 'POST',
         body: formData
     })
-        .then(response => response.json())
+        .then(response => response.text())
+        .then(text => {
+            // Find the complete JSON object with proper brace matching
+            const jsonStart = text.indexOf('{');
+            if (jsonStart === -1) throw new Error('No JSON found');
+
+            let braceCount = 0;
+            let jsonEnd = jsonStart;
+
+            for (let i = jsonStart; i < text.length; i++) {
+                if (text[i] === '{') braceCount++;
+                if (text[i] === '}') braceCount--;
+                if (braceCount === 0) {
+                    jsonEnd = i + 1;
+                    break;
+                }
+            }
+
+            const jsonStr = text.substring(jsonStart, jsonEnd);
+            return JSON.parse(jsonStr);
+        })
         .then(data => {
             if (data.success) {
                 if (data.requires_otp) {
@@ -775,7 +795,13 @@ function handleLogin() {
 
                     // Redirect after 1 second
                     setTimeout(() => {
-                        window.location.href = data.redirect;
+                        if (data.redirect) {
+                            window.location.href = data.redirect;
+                        } else {
+                            // Fallback based on user type
+                            const type = data.userType || data.user_type || 'customer';
+                            window.location.href = type === 'tailor' ? 'tailor/dashboard.php' : 'customer/dashboard.php';
+                        }
                     }, 1000);
                 }
             } else {
