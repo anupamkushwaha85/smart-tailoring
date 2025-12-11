@@ -6,6 +6,10 @@
 
 session_start();
 
+// Security
+define('DB_ACCESS', true);
+require_once '../config/security.php';
+
 if (!isset($_SESSION['logged_in']) || $_SESSION['user_type'] !== 'tailor') {
     header('Location: ../index.php');
     exit;
@@ -14,6 +18,9 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['user_type'] !== 'tailor') {
 $tailor_id = $_SESSION['user_id'];
 $tailor_name = $_SESSION['user_name'];
 $shop_name = $_SESSION['shop_name'];
+
+// Generate CSRF token
+$csrf_token = generate_csrf_token();
 ?>
 
 <!DOCTYPE html>
@@ -537,6 +544,7 @@ $shop_name = $_SESSION['shop_name'];
                     <div class="alert alert-error" id="profileErrorAlert"></div>
 
                     <form id="profileForm">
+                        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">Shop Name *</label>
@@ -646,6 +654,7 @@ $shop_name = $_SESSION['shop_name'];
                     <div class="alert alert-error" id="passwordErrorAlert"></div>
 
                     <form id="passwordForm">
+                        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
                         <div class="form-group">
                             <label class="form-label">Current Password *</label>
                             <input type="password" name="current_password" class="form-input" required>
