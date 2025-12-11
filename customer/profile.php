@@ -519,6 +519,7 @@ $csrf_token = generate_csrf_token();
                     <div class="alert alert-error" id="profileErrorAlert"></div>
 
                     <form id="profileForm">
+                        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">Full Name *</label>
@@ -574,6 +575,7 @@ $csrf_token = generate_csrf_token();
                     <div class="alert alert-error" id="passwordErrorAlert"></div>
 
                     <form id="passwordForm">
+                        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
                         <div class="form-group">
                             <label class="form-label">Current Password *</label>
                             <input type="password" name="current_password" class="form-input" required>
