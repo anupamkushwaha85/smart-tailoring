@@ -418,7 +418,13 @@ $page_title = $tailor['shop_name'];
             <div class="profile-header">
                 <div class="shop-avatar">
                     <?php if (!empty($tailor['shop_image'])): ?>
-                        <img src="/smart/smart-tailoring/uploads/shops/<?php echo htmlspecialchars($tailor['shop_image']); ?>" alt="<?php echo htmlspecialchars($tailor['shop_name']); ?>">
+                        <?php
+                        $imagePath = $tailor['shop_image'];
+                        if (!preg_match('/^http/', $imagePath)) {
+                            $imagePath = '/smart/smart-tailoring/uploads/shops/' . $imagePath;
+                        }
+                        ?>
+                        <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($tailor['shop_name']); ?>">
                     <?php else: ?>
                         <?php echo strtoupper(substr($tailor['shop_name'], 0, 1)); ?>
                     <?php endif; ?>
