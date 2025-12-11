@@ -717,8 +717,14 @@ $shop_name = $_SESSION['shop_name'];
 
                         // Load shop image if exists
                         if (profile.shop_image) {
-                            // Build correct image path
-                            const imagePath = '/smart/smart-tailoring/uploads/shops/' + profile.shop_image;
+                            let imagePath;
+                            // Check if it's a full URL (Cloudinary) or local file
+                            if (profile.shop_image.startsWith('http')) {
+                                imagePath = profile.shop_image;
+                            } else {
+                                // Build correct image path for local files
+                                imagePath = '../uploads/shops/' + profile.shop_image;
+                            }
                             displayProfileImage(imagePath);
                             document.getElementById('deleteAvatarBtn').style.display = 'flex';
                         }
@@ -740,14 +746,7 @@ $shop_name = $_SESSION['shop_name'];
                 // Remove escaped backslashes
                 imageUrl = imageUrl.replace(/\\/g, '/');
 
-                // Convert relative path to absolute path
-                if (imageUrl.startsWith('../')) {
-                    // Remove all ../
-                    imageUrl = imageUrl.replace(/\.\.\//g, '');
-
-                    // Build absolute path
-                    imageUrl = '/smart/smart-tailoring/' + imageUrl;
-                }
+                // Use the path as is - relative paths work fine
 
                 avatarImage.src = imageUrl;
                 avatarImage.style.display = 'block';
@@ -794,7 +793,13 @@ $shop_name = $_SESSION['shop_name'];
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        displayProfileImage(data.image_url);
+                        let imagePath;
+                        if (data.image_url.startsWith('http')) {
+                            imagePath = data.image_url;
+                        } else {
+                            imagePath = '../uploads/shops/' + data.filename;
+                        }
+                        displayProfileImage(imagePath);
                         document.getElementById('deleteAvatarBtn').style.display = 'flex';
                         alert('Profile image uploaded successfully!');
                     } else {
