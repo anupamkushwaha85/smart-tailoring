@@ -221,7 +221,16 @@ function createTailorCard(tailor) {
     // Make entire card clickable
     card.style.cursor = 'pointer';
     card.onclick = () => {
-        window.location.href = `/smart/smart-tailoring/view_tailor.php?id=${tailor.id}`;
+        // Check if user is logged in
+        const isLoggedIn = document.body.classList.contains('logged-in');
+
+        if (isLoggedIn) {
+            // Use relative path to avoid 404s
+            window.location.href = `view_tailor.php?id=${tailor.id}`;
+        } else {
+            // Show login modal
+            openLoginModal();
+        }
     };
 
     card.innerHTML = `
@@ -229,7 +238,7 @@ function createTailorCard(tailor) {
         <div class="tailor-header-section">
             <div class="tailor-image-left">
                 ${tailor.shop_image
-            ? `<img src="${tailor.shop_image.startsWith('http') ? tailor.shop_image : '/smart/smart-tailoring/uploads/shops/' + tailor.shop_image}" alt="${tailor.shop_name}">`
+            ? `<img src="${tailor.shop_image.startsWith('http') ? tailor.shop_image : 'uploads/shops/' + tailor.shop_image}" alt="${tailor.shop_name}">`
             : `<div class="tailor-avatar-left">${tailor.shop_name.charAt(0).toUpperCase()}</div>`
         }
             </div>

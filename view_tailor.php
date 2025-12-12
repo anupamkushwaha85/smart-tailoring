@@ -421,7 +421,7 @@ $page_title = $tailor['shop_name'];
                         <?php
                         $imagePath = $tailor['shop_image'];
                         if (!preg_match('/^http/', $imagePath)) {
-                            $imagePath = '/smart/smart-tailoring/uploads/shops/' . $imagePath;
+                            $imagePath = 'uploads/shops/' . $imagePath;
                         }
                         ?>
                         <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($tailor['shop_name']); ?>">
@@ -589,7 +589,7 @@ $page_title = $tailor['shop_name'];
             const select = document.getElementById('orderSelect');
             if (!select) return; // Exit if not logged in as customer
 
-            fetch(`/smart/smart-tailoring/api/orders/get_customer_orders.php?tailor_id=${tailorId}`)
+            fetch(`api/orders/get_customer_orders.php?tailor_id=${tailorId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.success && data.orders && data.orders.length > 0) {
@@ -611,7 +611,7 @@ $page_title = $tailor['shop_name'];
 
         // Load and display reviews
         function loadReviews() {
-            fetch(`/smart/smart-tailoring/api/reviews/get_reviews.php?tailor_id=${tailorId}`)
+            fetch(`api/reviews/get_reviews.php?tailor_id=${tailorId}`)
                 .then(response => response.json())
                 .then(data => {
                     const reviewsList = document.getElementById('reviewsList');
@@ -682,7 +682,7 @@ $page_title = $tailor['shop_name'];
                 }
 
                 // Submit review
-                fetch('/smart/smart-tailoring/api/reviews/submit_review.php', {
+                fetch('api/reviews/submit_review.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
