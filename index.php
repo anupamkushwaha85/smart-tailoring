@@ -827,7 +827,7 @@ $user_type = $is_logged_in ? $_SESSION['user_type'] : '';
 
             <!-- Footer Bottom -->
             <div class="footer-bottom">
-                <p>Created By <span class="highlight">Team Anupam Kushwaha</span> | All Rights Reserved!</p>
+                <p>Created By <span class="highlight">Anupam Kushwaha</span> | All Rights Reserved!</p>
             </div>
         </div>
     </footer>
