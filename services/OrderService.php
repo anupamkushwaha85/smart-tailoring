@@ -363,7 +363,7 @@ class OrderService
                 'delivered' => ['completed'],
                 // Legacy support
                 'accepted' => ['in_progress', 'cancelled'],
-                'in_progress' => ['ready', 'cancelled'],
+                'in_progress' => ['cutting', 'ready', 'cancelled'],
                 'ready' => ['completed']
             ]
         ];
