@@ -145,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const measurementCustomRadio = document.getElementById('measurementCustom');
 
     let hasDefaultMeasurement = false;
+    let defaultMeasurementData = null;
     let currentGarmentType = '';
 
     // Check if user is logged in (based on body class)
@@ -190,13 +191,21 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success && data.has_default) {
                     hasDefaultMeasurement = true;
-                    // Show success message if default option is selected
+                    defaultMeasurementData = data.measurement;
+
+                    // If default option is selected, populate hidden fields
                     if (measurementDefaultRadio && measurementDefaultRadio.checked) {
+                        populateDefaultMeasurementFields();
                         defaultMeasurementMsg.style.display = 'block';
                         noDefaultError.style.display = 'none';
                     }
                 } else {
                     hasDefaultMeasurement = false;
+                    defaultMeasurementData = null;
+
+                    // Clear hidden fields
+                    clearDefaultMeasurementFields();
+
                     // If default option is selected, show error and force custom
                     if (measurementDefaultRadio && measurementDefaultRadio.checked) {
                         showNoDefaultError();
@@ -206,7 +215,29 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => {
                 console.error('Error checking default measurement:', error);
                 hasDefaultMeasurement = false;
+                defaultMeasurementData = null;
             });
+    }
+
+    function populateDefaultMeasurementFields() {
+        const measurementIdInput = document.getElementById('measurementId');
+        const measurementsSnapshotInput = document.getElementById('measurementsSnapshot');
+
+        if (measurementIdInput && defaultMeasurementData) {
+            measurementIdInput.value = defaultMeasurementData.id;
+        }
+
+        if (measurementsSnapshotInput && defaultMeasurementData) {
+            measurementsSnapshotInput.value = JSON.stringify(defaultMeasurementData.measurements);
+        }
+    }
+
+    function clearDefaultMeasurementFields() {
+        const measurementIdInput = document.getElementById('measurementId');
+        const measurementsSnapshotInput = document.getElementById('measurementsSnapshot');
+
+        if (measurementIdInput) measurementIdInput.value = '';
+        if (measurementsSnapshotInput) measurementsSnapshotInput.value = '';
     }
 
     // Function to show no default measurement error
@@ -242,6 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (noDefaultError) {
                 noDefaultError.style.display = 'none';
             }
+            populateDefaultMeasurementFields();
         }
     }
 
@@ -252,6 +284,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (noDefaultError) {
             noDefaultError.style.display = 'none';
         }
+
+        clearDefaultMeasurementFields();
 
         // Re-enable default option
         if (measurementDefaultRadio) {

@@ -661,6 +661,23 @@ $shop_name = $_SESSION['shop_name'];
             grid.innerHTML = orders.map(order => createOrderCard(order)).join('');
         }
 
+        // Format measurements JSON
+        function formatMeasurements(snapshot) {
+            try {
+                const data = typeof snapshot === 'string' ? JSON.parse(snapshot) : snapshot;
+                if (!data) return 'N/A';
+
+                // If it's a simple key-value object
+                return Object.entries(data).map(([key, value]) => {
+                    // Format key (e.g. "chest" -> "Chest")
+                    const label = key.charAt(0).toUpperCase() + key.slice(1).replace('_', ' ');
+                    return `<strong>${label}:</strong> ${value}`;
+                }).join('<br>');
+            } catch (e) {
+                return snapshot;
+            }
+        }
+
         // Create order card HTML
         function createOrderCard(order) {
             const statusClass = `status-${order.order_status}`;
@@ -779,6 +796,12 @@ $shop_name = $_SESSION['shop_name'];
                             <div class="detail-row">
                                 <span class="detail-label">Measurements:</span>
                                 <span class="detail-value">${order.measurements}</span>
+                            </div>
+                            ` : ''}
+                            ${!order.measurements && order.measurements_snapshot ? `
+                            <div class="detail-row">
+                                <span class="detail-label">Measurements:</span>
+                                <span class="detail-value">${formatMeasurements(order.measurements_snapshot)}</span>
                             </div>
                             ` : ''}
                             ${order.measurement_notes ? `

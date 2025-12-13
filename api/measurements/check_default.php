@@ -36,7 +36,7 @@ require_once '../../config/db.php';
 try {
     // Check if customer has a default measurement for this garment type
     $stmt = $conn->prepare("
-        SELECT id, label, measurements 
+        SELECT id, label, measurements_data 
         FROM measurements 
         WHERE customer_id = ? 
         AND garment_context = ? 
@@ -57,7 +57,7 @@ try {
             'measurement' => [
                 'id' => $measurement['id'],
                 'label' => $measurement['label'],
-                'measurements' => json_decode($measurement['measurements'], true)
+                'measurements' => json_decode($measurement['measurements_data'], true)
             ]
         ]);
     } else {
