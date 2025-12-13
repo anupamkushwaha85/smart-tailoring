@@ -603,11 +603,16 @@ $completed_orders = $completed_data['count'] ?? 0;
 
                 <div class="shop-avatar">
                     <?php if ($shop_image): ?>
-                        <img src="/smart/smart-tailoring/uploads/shops/<?php echo htmlspecialchars($shop_image); ?>"
+                        <?php
+                        $image_src = (strpos($shop_image, 'http') === 0)
+                            ? $shop_image
+                            : '../uploads/shops/' . $shop_image;
+                        ?>
+                        <img src="<?php echo htmlspecialchars($image_src); ?>"
                             alt="Shop Image"
                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
                     <?php else: ?>
-                        <?php echo strtoupper(substr($shop_name, 0, 1)); ?>
+                        <?php echo strtoupper(substr($tailor['shop_name'], 0, 1)); ?>
                     <?php endif; ?>
                 </div>
 
