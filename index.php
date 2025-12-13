@@ -43,6 +43,64 @@ $user_type = $is_logged_in ? $_SESSION['user_type'] : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Smart Tailoring Service - Find the best tailors in Satna for custom stitching, alterations, and designer wear. Book online today!">
+    <meta name="keywords" content="tailor, stitching, satna, alterations, designer wear, custom clothing, smart tailoring">
+    <meta name="author" content="Smart Tailoring Service">
+    <link rel="canonical" href="https://smart-tailoring-service.onrender.com/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://smart-tailoring-service.onrender.com/">
+    <meta property="og:title" content="Smart Tailoring Service - Find Best Tailors in Satna">
+    <meta property="og:description" content="Smart Tailoring Service - Find the best tailors in Satna for custom stitching, alterations, and designer wear. Book online today!">
+    <meta property="og:image" content="https://smart-tailoring-service.onrender.com/assets/images/logo.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://smart-tailoring-service.onrender.com/">
+    <meta property="twitter:title" content="Smart Tailoring Service - Find Best Tailors in Satna">
+    <meta property="twitter:description" content="Smart Tailoring Service - Find the best tailors in Satna for custom stitching, alterations, and designer wear. Book online today!">
+    <meta property="twitter:image" content="https://smart-tailoring-service.onrender.com/assets/images/logo.png">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Smart Tailoring Service",
+            "image": "https://smart-tailoring-service.onrender.com/assets/images/logo.png",
+            "@id": "https://smart-tailoring-service.onrender.com/",
+            "url": "https://smart-tailoring-service.onrender.com/",
+            "telephone": "+919876543210",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Civil Lines",
+                "addressLocality": "Satna",
+                "addressRegion": "MP",
+                "postalCode": "485001",
+                "addressCountry": "IN"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 24.58,
+                "longitude": 80.83
+            },
+            "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday"
+                ],
+                "opens": "09:00",
+                "closes": "20:00"
+            },
+            "priceRange": "₹₹"
+        }
+    </script>
+
     <title>Smart Tailoring Service - Find Best Tailors in Satna</title>
 
     <!-- Preconnect to external domains -->

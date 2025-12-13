@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /includes/
+Disallow: /config/
+Disallow: /vendor/
+Disallow: /logs/
+
+Sitemap: https://smart-tailoring-service.onrender.com/sitemap.xml
