@@ -239,7 +239,7 @@ class OrderRepository
 
         if ($result) {
             // Auto-generate OTPs based on status
-            if ($status === 'accepted') {
+            if ($status === 'booked' || $status === 'accepted') {
                 $this->generateStartOtp($order_id);
             } elseif ($status === 'ready_for_pickup') {
                 $this->generateDeliveryOtp($order_id);

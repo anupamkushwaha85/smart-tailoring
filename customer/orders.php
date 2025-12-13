@@ -527,7 +527,7 @@ $customer_name = $_SESSION['user_name'];
 
             // OTP Display Logic
             let otpHtml = '';
-            if (order.order_status === 'accepted' && order.start_otp) {
+            if ((order.order_status === 'accepted' || order.order_status === 'booked') && order.start_otp) {
                 otpHtml = `
                     <div class="otp-section" style="background: #e0f2fe; padding: 1rem; border-radius: 8px; margin: 1rem 0; border: 1px dashed #0284c7;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
