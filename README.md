@@ -10,7 +10,7 @@
 
 Production-ready web platform connecting customers with tailors for custom clothing orders. Features real-time notifications, geolocation-based tailor discovery, comprehensive measurement management, and automated deployment via CI/CD pipeline.
 
-**Live Demo:** [https://smart-tailoring.onrender.com](https://smart-tailoring.onrender.com)
+**Live Demo:** [https://smart-tailoring-opv5.onrender.com](https://smart-tailoring-opv5.onrender.com/)
 
 ## 🏗️ System Architecture
 
